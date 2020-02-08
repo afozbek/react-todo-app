@@ -3,7 +3,6 @@ import React from "react";
 class App extends React.Component {
   state = {
     todoList: [],
-    completedItems: 0,
     keyCodes: {
       enter: 13,
       space: 32,
@@ -22,8 +21,7 @@ class App extends React.Component {
     const todoObj = { id: Math.random(), item: todo.trim(), done: false };
 
     this.setState(prevState => ({
-      todoList: prevState.todoList.concat(todoObj),
-      completedItems: prevState.completedItems + 1
+      todoList: prevState.todoList.concat(todoObj)
     }));
 
     target.value = "";
@@ -83,20 +81,15 @@ class App extends React.Component {
   };
 
   toggleTodoStatus = (todoId, target) => {
-    let completed = false;
     const newTodoList = this.state.todoList.map(todo => {
       if (todo.id === todoId) {
         todo.done = !todo.done;
-        completed = todo.done;
       }
       return todo;
     });
 
     this.setState(prevState => ({
-      todoList: newTodoList,
-      completedItems: completed
-        ? prevState.completedItems - 1
-        : prevState.completedItems + 1
+      todoList: newTodoList
     }));
 
     target.classList.toggle("-done");
@@ -108,8 +101,7 @@ class App extends React.Component {
     );
 
     this.setState(prevState => ({
-      todoList: filteredTodos,
-      completedItems: prevState.completedItems - 1
+      todoList: filteredTodos
     }));
 
     this.refs.todoInputRef.focus();
@@ -149,7 +141,7 @@ class App extends React.Component {
         <main className="o-app__main">
           {todoList}
           <footer className="o-app__footer">
-            <p>{this.state.completedItems} Items Left</p>
+            <p>{this.state.todoList.length} Items Left</p>
             <button>All</button>
             <button>Active</button>
             <button>Completed</button>
