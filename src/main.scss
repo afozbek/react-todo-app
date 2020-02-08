@@ -4,25 +4,39 @@
   box-sizing: border-box;
 }
 
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+}
+
 .o-app {
   width: 550px;
   margin: 0 auto;
   text-align: center;
 
-  &__header {
-    margin: 20px;
+  &__main {
+    margin-bottom: 10px;
   }
 
   &__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__infoMsg {
+    text-align: justify;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-bottom: 10px;
   }
 }
 
 .m-todo {
   position: relative;
-  width: 70%;
+  width: 80%;
   margin: 20px auto;
 
   &__input {
@@ -32,6 +46,7 @@
     border-radius: 3px;
     padding: 15px;
     font-size: 17px;
+    cursor: pointer;
 
     &::placeholder {
       font-size: 15px;
@@ -53,13 +68,47 @@
     text-align: justify;
     position: relative;
 
+
+    word-break: break-all;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    &.-done {
-      color: #888;
-      text-decoration: line-through;
+    &:hover {
+      .m-todo__removeBtn {
+        visibility: visible;
+        opacity: 1;
+      }
     }
+
+    &.-done {
+      .m-todo__desc {
+        color: #888;
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  &__desc {
+    width: 70%;
+  }
+
+
+  &__removeBtn {
+    visibility: hidden;
+    opacity: 0;
+
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+    font-size: 12px;
+    background: #b70a0a;
+    border-color: #b70a0a;
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+
+    transition: opacity 0.8s;
   }
 }
