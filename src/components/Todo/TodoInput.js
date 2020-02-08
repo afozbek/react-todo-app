@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { addTodoItem } from "../../store/actions";
 import { keyCodes } from "../../util";
 
-const TodoInput = ({ dispatch }) => {
-  const inputKeyDownHandler = e => {
-    if (Object.values(keyCodes).indexOf(e.keyCode) === -1 || e.target.value.length < 2) return;
+const TodoInput = ({ addTodoItem }) => {
+  const inputKeyDownHandler = ({target, keyCode}) => {
+    if (Object.values(keyCodes).indexOf(keyCode) === -1 || target.value.length < 2) return;
 
-    dispatch(addTodoItem(e));
+    addTodoItem(target.value);
 
-    e.target.value = "";
+    target.value = "";
   }
 
   return (
@@ -28,7 +28,11 @@ const TodoInput = ({ dispatch }) => {
 }
 
 TodoInput.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  addTodoItem: PropTypes.func.isRequired
 }
 
-export default connect()(TodoInput);
+const mapDispatchToProps = {
+  addTodoItem
+}
+
+export default connect(null, mapDispatchToProps)(TodoInput);
