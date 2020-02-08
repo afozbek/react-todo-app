@@ -18,9 +18,10 @@ class App extends React.Component {
   addTodoItem = ({ keyCode, target }) => {
     if (keyCode !== this.state.keyCodes.enter) return;
 
+    const uniqId = Math.ceil(Math.random() * 1000000);
     const todo = target.value;
     const todoObj = { 
-      id: Math.random(),
+      id: uniqId,
       item: todo.trim(),
       done: false
     };
