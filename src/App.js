@@ -9,16 +9,22 @@ class App extends React.Component {
       left: 37,
       up: 38,
       right: 39,
-      down: 40
-    }
+      down: 40,
+      delete: 46
+    },
+    activeFilter: "ALL"
   };
 
   addTodoItem = ({ keyCode, target }) => {
     if (keyCode !== this.state.keyCodes.enter) return;
-    if (target.value.length < 3) return;
 
+    const uniqId = Math.ceil(Math.random() * 1000000);
     const todo = target.value;
-    const todoObj = { id: Math.random(), item: todo.trim(), done: false };
+    const todoObj = { 
+      id: uniqId,
+      item: todo.trim(),
+      done: false
+    };
 
     this.setState(prevState => ({
       todoList: prevState.todoList.concat(todoObj)
@@ -32,6 +38,8 @@ class App extends React.Component {
 
     if (keyCode === this.state.keyCodes.space) {
       return this.toggleTodoStatus(todoId, target);
+    } else if (keyCode === this.state.keyCodes.delete) {
+      return this.removeTodoItem(todoId);
     }
 
     return this.focusElement(keyCode, target);
@@ -95,7 +103,7 @@ class App extends React.Component {
     target.classList.toggle("-done");
   };
 
-  removeTodoItem = (todoId, e) => {
+  removeTodoItem = (todoId) => {
     const filteredTodos = this.state.todoList.filter(todo => {
       return todo.id !== todoId;
     });
@@ -107,14 +115,38 @@ class App extends React.Component {
     this.refs.todoInputRef.focus();
   };
 
-  componentDidMount() {
-    this.refs.todoInputRef.focus();
+  clearCompletedTodos = () => {
+    let unfinishedTodos = this.state.todoList.filter(todo => todo.done === false);
+
+    this.setState({
+      activeFilter: "ALL",
+      todoList: unfinishedTodos
+    });
   }
 
-  render() {
-    const todos = this.state.todoList.map(todo => (
+  setActiveStatus = (status) => {
+    this.setState({
+      activeFilter: status
+    });
+  }
+
+  filterByStatus = (status) => {
+    switch (status) {
+      case "ALL":
+        return this.state.todoList;
+      case "ACTIVE":
+        return this.state.todoList.filter(todo => todo.done === false);
+      case "COMPLETED":
+        return this.state.todoList.filter(todo => todo.done === true);
+      default:
+        return this.state.todoList;
+    }
+  };
+
+  getTodos = (status) => {
+    return this.filterByStatus(status).map(todo => (
       <li
-        className="m-todo__item"
+        className={`m-todo__item ${todo.done ? "-done": ""}`}
         aria-label={"You want to do: " + todo.item}
         key={todo.id}
         tabIndex="0"
@@ -129,26 +161,36 @@ class App extends React.Component {
         </button>
       </li>
     ));
+  }
 
-    const todoList = (
+  componentDidMount() {
+    this.refs.todoInputRef.focus();
+  }
+
+  render() {
+    const todos = this.getTodos(this.state.activeFilter);
+
+    const todoList = todos.length > 0 ? (
       <ul className="m-todo__list" ref="todoListRef">
         {todos}
       </ul>
+    ) : null;
+
+    const footer = (
+      <footer className="o-app__footer">
+        <p>{this.state.todoList.length} Items Left</p>
+        <button onClick={() => this.setActiveStatus("ALL")}>All</button>
+        <button onClick={() => this.setActiveStatus("ACTIVE")}>Active</button>
+        <button onClick={() => this.setActiveStatus("COMPLETED")}>Completed</button>
+        <button onClick={this.clearCompletedTodos}>Clear Completed</button>
+      </footer>
     );
 
-    const main =
-      todos.length > 0 ? (
-        <main className="o-app__main">
-          {todoList}
-          <footer className="o-app__footer">
-            <p>{this.state.todoList.length} Items Left</p>
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
-            <button>Clear Completed</button>
-          </footer>
-        </main>
-      ) : null;
+    const main = (
+      <main className="o-app__main">
+        {todoList}
+      </main>
+    );
 
     return (
       <div className="o-app">
@@ -166,6 +208,10 @@ class App extends React.Component {
           />
 
           {main}
+          {this.state.todoList.length > 0 ? footer: null}
+          
+          <p className="o-app__infoMsg">To remove an item press <code>del</code> in your keyboard when you focus the item</p>
+          <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code>delete</code> button</p>
         </div>
       </div>
     );
