@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
 
-import { addTodo } from "../store/actions";
-import { keyCodes } from "../util";
+import { addTodoItem } from "../../store/actions";
+import { keyCodes } from "../../util";
 
 const TodoInput = ({ dispatch }) => {
-  const todoKeyDownHandler = e => {
-    if (Object.values(keyCodes).indexOf(e.keyCode) === -1) return;
+  const inputKeyDownHandler = e => {
+    if (Object.values(keyCodes).indexOf(e.keyCode) === -1 || e.target.value.length < 2) return;
 
-    dispatch(addTodo(e));
+    dispatch(addTodoItem(e));
 
     e.target.value = "";
   }
@@ -17,7 +17,7 @@ const TodoInput = ({ dispatch }) => {
   return (
     <input
       className="m-todo__input"
-      onKeyDown={(e) => todoKeyDownHandler(e)}
+      onKeyDown={inputKeyDownHandler}
       aria-label="Please enter your todo item"
       name="todo"
       id="todoInput"
