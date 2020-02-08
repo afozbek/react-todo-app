@@ -10,7 +10,7 @@ const Footer = ({todoListLength, clearCompletedTodos, changeActiveFilter}) => {
     changeActiveFilter(filter);
   }
 
-  return (
+  return todoListLength > 0 ? (
     <footer className="o-app__footer">
       <p>{todoListLength} Items Left</p>
       <button data-filter="ALL" onClick={setActiveFilter}>All</button>
@@ -18,7 +18,7 @@ const Footer = ({todoListLength, clearCompletedTodos, changeActiveFilter}) => {
       <button data-filter="COMPLETED" onClick={setActiveFilter}>Completed</button>
       <button onClick={clearCompletedTodos}>Clear Completed</button>
     </footer>
-  )
+  ) : null;
 }
 
 Footer.propTypes = {
