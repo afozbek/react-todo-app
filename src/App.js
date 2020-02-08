@@ -96,9 +96,9 @@ class App extends React.Component {
   };
 
   removeTodoItem = (todoId, e) => {
-    const filteredTodos = this.state.todoList.filter(
-      todo => todo.id !== todoId
-    );
+    const filteredTodos = this.state.todoList.filter(todo => {
+      return todo.id !== todoId;
+    });
 
     this.setState(prevState => ({
       todoList: filteredTodos
