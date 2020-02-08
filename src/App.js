@@ -111,6 +111,21 @@ class App extends React.Component {
     this.refs.todoInputRef.focus();
   }
 
+  filterByStatus = status => {
+    switch (status) {
+      case "ALL":
+        break;
+      case "ACTIVE":
+        break;
+      case "COMPLETED":
+        break;
+      case "CLEAR_COMPLETED":
+        break;
+      default:
+        return;
+    }
+  };
+
   render() {
     const todos = this.state.todoList.map(todo => (
       <li
@@ -142,10 +157,16 @@ class App extends React.Component {
           {todoList}
           <footer className="o-app__footer">
             <p>{this.state.todoList.length} Items Left</p>
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
-            <button>Clear Completed</button>
+            <button onClick={() => this.filterByStatus("ALL")}>All</button>
+            <button onClick={() => this.filterByStatus("ACTIVE")}>
+              Active
+            </button>
+            <button onClick={() => this.filterByStatus("COMPLETED")}>
+              Completed
+            </button>
+            <button onClick={() => this.filterByStatus("CLEAR_COMPLETED")}>
+              Clear Completed
+            </button>
           </footer>
         </main>
       ) : null;
