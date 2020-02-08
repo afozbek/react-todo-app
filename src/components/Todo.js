@@ -1,7 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
 
-const Todo = ({todo ,removeTodoItem, todoKeyDownHandler}) => {
+import { keyCodes } from "../util"
+import { removeTodo } from '../store/actions/index';
+
+const Todo = ({todo ,removeTodoItem, dispatch}) => {
+
+  const todoKeyDownHandler = (todoId, { keyCode, target }) => {
+    if (Object.values(keyCodes).indexOf(keyCode) === -1) return;
+
+    if (keyCode === keyCodes.space) {
+      // return toggleTodoStatus(todoId, target);
+    } else if (keyCode === keyCodes.delete) {
+      return dispatch(removeTodo(todoId, target));
+    }
+
+    // return this.focusElement(keyCode, target);
+  }
+
   return (
     <li
       className={`m-todo__item ${todo.done ? "-done" : ""}`}
@@ -14,6 +31,7 @@ const Todo = ({todo ,removeTodoItem, todoKeyDownHandler}) => {
       <button
         className="m-todo__removeBtn"
         onClick={e => removeTodoItem(todo.id, e)}
+        // onClick={(e) => dispatch(removeTodo(todo.id, e))}
       >
         Delete Todo
       </button>
@@ -24,7 +42,7 @@ const Todo = ({todo ,removeTodoItem, todoKeyDownHandler}) => {
 Todo.propTypes = {
   todo: PropTypes.object.isRequired,
   removeTodoItem: PropTypes.func.isRequired,
-  todoKeyDownHandler: PropTypes.func.isRequired
+  // todoKeyDownHandler: PropTypes.func.isRequired
 }
 
-export default Todo;
+export default connect()(Todo);

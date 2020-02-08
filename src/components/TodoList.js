@@ -18,7 +18,12 @@ const TodoList = ({ todos, activeFilter, todoKeyDownHandler, removeTodoItem }) =
 
   const getTodos = (status) => {
     return filterByStatus(status).map(todo => (
-      <Todo key={todo.id} todo={todo} removeTodoItem={removeTodoItem} todoKeyDownHandler={todoKeyDownHandler}/>
+      <Todo 
+        key={todo.id} 
+        todo={todo} 
+        removeTodoItem={removeTodoItem} 
+        // todoKeyDownHandler={todoKeyDownHandler}
+      />
     ));
   }
 

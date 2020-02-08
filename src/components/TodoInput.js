@@ -1,11 +1,23 @@
 import React from 'react'
 import PropTypes from "prop-types"
+import { connect } from 'react-redux';
 
-const TodoInput = ({ addTodoItem }) => {
+import { addTodo } from "../store/actions";
+import { keyCodes } from "../util";
+
+const TodoInput = ({ dispatch }) => {
+  const todoKeyDownHandler = e => {
+    if (Object.values(keyCodes).indexOf(e.keyCode) === -1) return;
+
+    dispatch(addTodo(e));
+
+    e.target.value = "";
+  }
+
   return (
     <input
       className="m-todo__input"
-      onKeyDown={addTodoItem}
+      onKeyDown={(e) => todoKeyDownHandler(e)}
       aria-label="Please enter your todo item"
       name="todo"
       id="todoInput"
@@ -16,7 +28,7 @@ const TodoInput = ({ addTodoItem }) => {
 }
 
 TodoInput.propTypes = {
-  addTodoItem: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired
 }
 
-export default TodoInput;
+export default connect()(TodoInput);

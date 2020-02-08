@@ -1,6 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import TodoList from './components/TodoList';
 import TodoInput from "./components/TodoInput";
+
+// import { addTodo } from './store/actions/index';
 
 class App extends React.Component {
   state = {
@@ -17,23 +21,23 @@ class App extends React.Component {
     activeFilter: "ALL"
   };
 
-  addTodoItem = ({ keyCode, target }) => {
-    if (keyCode !== this.state.keyCodes.enter) return;
+  // addTodoItem = ({ keyCode, target }) => {
+  //   if (keyCode !== this.state.keyCodes.enter) return;
 
-    const uniqId = Math.ceil(Math.random() * 1000000);
-    const todo = target.value;
-    const todoObj = { 
-      id: uniqId,
-      item: todo.trim(),
-      done: false
-    };
+  //   const uniqId = Math.ceil(Math.random() * 1000000);
+  //   const todo = target.value;
+  //   const todoObj = { 
+  //     id: uniqId,
+  //     item: todo.trim(),
+  //     done: false
+  //   };
 
-    this.setState(prevState => ({
-      todoList: prevState.todoList.concat(todoObj)
-    }));
+  //   this.setState(prevState => ({
+  //     todoList: prevState.todoList.concat(todoObj)
+  //   }));
 
-    target.value = "";
-  };
+  //   target.value = "";
+  // };
 
   todoKeyDownHandler = (todoId, { keyCode, target }) => {
     if (Object.values(this.state.keyCodes).indexOf(keyCode) === -1) return;
@@ -143,12 +147,13 @@ class App extends React.Component {
   componentDidMount() {
     // TODO: REF EKLENİCEK
     document.querySelector(".m-todo__input").focus();
+    console.log("PROPS:", this.props.todoList)
   }
 
   render() {
-    const todoList = this.state.todoList.length > 0 ? (
+    const todoList = this.props.todoList.length > 0 ? (
       <TodoList
-        todos={this.state.todoList}
+        todos={this.props.todoList}
         activeFilter={this.state.activeFilter}
         removeTodoItem={this.removeTodoItem}
         todoKeyDownHandler={this.todoKeyDownHandler}
@@ -157,7 +162,7 @@ class App extends React.Component {
 
     const footer = (
       <footer className="o-app__footer">
-        <p>{this.state.todoList.length} Items Left</p>
+        <p>{this.props.todoList.length} Items Left</p>
         <button onClick={() => this.setActiveStatus("ALL")}>All</button>
         <button onClick={() => this.setActiveStatus("ACTIVE")}>Active</button>
         <button onClick={() => this.setActiveStatus("COMPLETED")}>Completed</button>
@@ -175,12 +180,10 @@ class App extends React.Component {
       <div className="o-app">
         <h1 className="o-app__header">Today's TO DO's</h1>
         <div className="m-todo">
-          <TodoInput
-            addTodoItem={this.addTodoItem}
-          />
+          <TodoInput />
 
           {main}
-          {this.state.todoList.length > 0 ? footer: null}
+          {this.props.todoList.length > 0 ? footer: null}
 
           <p className="o-app__infoMsg">To remove an item press <code>del</code> in your keyboard when you focus the item</p>
           <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code>delete</code> button</p>
@@ -190,4 +193,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    todoList: state.todos
+  }
+}
+
+export default connect(mapStateToProps, null)(App);
