@@ -46,7 +46,6 @@ const removeTodoItem = (state, todoId, target) => {
 }
 
 const toggleTodoStatus = (state, todoId, target) => {
-  console.log("TOGGLE TODO")
   const newTodoList = state.map(todo => {
     if (todo.id === todoId) {
       todo.done = !todo.done;
