@@ -1,4 +1,6 @@
 import React from "react";
+import TodoList from './components/TodoList';
+import TodoInput from "./components/TodoInput";
 
 class App extends React.Component {
   state = {
@@ -39,15 +41,65 @@ class App extends React.Component {
     if (keyCode === this.state.keyCodes.space) {
       return this.toggleTodoStatus(todoId, target);
     } else if (keyCode === this.state.keyCodes.delete) {
-      return this.removeTodoItem(todoId);
+      return this.removeTodoItem(todoId, target);
     }
 
     return this.focusElement(keyCode, target);
   };
 
+  removeTodoItem = (todoId, target) => {
+    const filteredTodos = this.state.todoList.filter(todo => {
+      return todo.id !== todoId;
+    });
+
+    this.setState({
+      todoList: filteredTodos
+    });
+
+    // TODO: REF EKLENİCEK
+    const nextEl = target.nextElementSibling;
+    if (nextEl) {
+      nextEl.focus();
+    } else {
+      document.querySelector(".m-todo__input").focus();
+    }
+  };
+
+  toggleTodoStatus = (todoId, target) => {
+    const newTodoList = this.state.todoList.map(todo => {
+      if (todo.id === todoId) {
+        todo.done = !todo.done;
+      }
+      return todo;
+    });
+
+    this.setState({
+      todoList: newTodoList
+    });
+
+    target.classList.toggle("-done");
+  };
+
+  clearCompletedTodos = () => {
+    let unfinishedTodos = this.state.todoList.filter(todo => todo.done === false);
+
+    this.setState({
+      activeFilter: "ALL",
+      todoList: unfinishedTodos
+    });
+  }
+
+  setActiveStatus = (status) => {
+    this.setState({
+      activeFilter: status
+    });
+  }
+
   focusElement = (keyCode, target) => {
     const { left, up, down, right } = this.state.keyCodes;
-    const todoItems = this.refs.todoListRef.children;
+
+    // TODO: REF EKLENICEK
+    const todoItems = document.querySelector(".m-todo__list").children;
     const firstTodoItem = todoItems[0];
     const lastTodoItem = todoItems[todoItems.length - 1];
 
@@ -88,92 +140,19 @@ class App extends React.Component {
     nextFocusEl.focus();
   };
 
-  toggleTodoStatus = (todoId, target) => {
-    const newTodoList = this.state.todoList.map(todo => {
-      if (todo.id === todoId) {
-        todo.done = !todo.done;
-      }
-      return todo;
-    });
-
-    this.setState(prevState => ({
-      todoList: newTodoList
-    }));
-
-    target.classList.toggle("-done");
-  };
-
-  removeTodoItem = (todoId) => {
-    const filteredTodos = this.state.todoList.filter(todo => {
-      return todo.id !== todoId;
-    });
-
-    this.setState(prevState => ({
-      todoList: filteredTodos
-    }));
-
-    this.refs.todoInputRef.focus();
-  };
-
-  clearCompletedTodos = () => {
-    let unfinishedTodos = this.state.todoList.filter(todo => todo.done === false);
-
-    this.setState({
-      activeFilter: "ALL",
-      todoList: unfinishedTodos
-    });
-  }
-
-  setActiveStatus = (status) => {
-    this.setState({
-      activeFilter: status
-    });
-  }
-
-  filterByStatus = (status) => {
-    switch (status) {
-      case "ALL":
-        return this.state.todoList;
-      case "ACTIVE":
-        return this.state.todoList.filter(todo => todo.done === false);
-      case "COMPLETED":
-        return this.state.todoList.filter(todo => todo.done === true);
-      default:
-        return this.state.todoList;
-    }
-  };
-
-  getTodos = (status) => {
-    return this.filterByStatus(status).map(todo => (
-      <li
-        className={`m-todo__item ${todo.done ? "-done": ""}`}
-        aria-label={"You want to do: " + todo.item}
-        key={todo.id}
-        tabIndex="0"
-        onKeyDown={e => this.todoKeyDownHandler(todo.id, e)}
-      >
-        <p className="m-todo__desc">{todo.item}</p>
-        <button
-          className="m-todo__removeBtn"
-          onClick={e => this.removeTodoItem(todo.id, e)}
-        >
-          Delete Todo
-        </button>
-      </li>
-    ));
-  }
-
   componentDidMount() {
-    this.refs.todoInputRef.focus();
+    // TODO: REF EKLENİCEK
+    document.querySelector(".m-todo__input").focus();
   }
 
   render() {
-    const todos = this.getTodos(this.state.activeFilter);
-
-    const todoList = todos.length > 0 ? (
-      <ul className="m-todo__list" ref="todoListRef">
-        {todos}
-      </ul>
+    const todoList = this.state.todoList.length > 0 ? (
+      <TodoList
+        todos={this.state.todoList}
+        activeFilter={this.state.activeFilter}
+        removeTodoItem={this.removeTodoItem}
+        todoKeyDownHandler={this.todoKeyDownHandler}
+      />
     ) : null;
 
     const footer = (
@@ -196,20 +175,13 @@ class App extends React.Component {
       <div className="o-app">
         <h1 className="o-app__header">Today's TO DO's</h1>
         <div className="m-todo">
-          <input
-            ref="todoInputRef"
-            className="m-todo__input"
-            onKeyDown={this.addTodoItem}
-            aria-label="Please enter your todo item"
-            name="todo"
-            id="todoInput"
-            type="text"
-            placeholder="What do you want to do today 🍓"
+          <TodoInput
+            addTodoItem={this.addTodoItem}
           />
 
           {main}
           {this.state.todoList.length > 0 ? footer: null}
-          
+
           <p className="o-app__infoMsg">To remove an item press <code>del</code> in your keyboard when you focus the item</p>
           <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code>delete</code> button</p>
         </div>
