@@ -28,8 +28,8 @@ class App extends React.Component {
           {main}
           {this.props.todoList.length > 0 ? <Footer /> : null}
 
-          <p className="o-app__infoMsg">To remove an item press <code>del</code> in your keyboard when you focus the item</p>
-          <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code>delete</code> button</p>
+          <p className="o-app__infoMsg">To remove an item press <code><strong>del</strong></code> in your keyboard when you focus the item</p>
+          <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code><strong>delete</strong></code> button</p>
         </div>
       </div>
     );
