@@ -1,7 +1,7 @@
 // TODOS
-export const addTodoItem = event => ({
+export const addTodoItem = (todoText) => ({
   type: 'ADD_TODO',
-  event
+  todoText
 });
 
 export const removeTodoItem = (todoId, target) => ({

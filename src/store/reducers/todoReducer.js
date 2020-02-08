@@ -2,7 +2,7 @@
 const todos = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return addTodoItem(state, action.event);
+      return addTodoItem(state, action.todoText);
     case 'REMOVE_TODO':
       return removeTodoItem(state, action.todoId, action.target);
     case 'TOGGLE_TODO':
@@ -14,12 +14,11 @@ const todos = (state = [], action) => {
   }
 }
 
-const addTodoItem = (state, { target }) => {
+const addTodoItem = (state, todoText) => {
     const uniqId = Math.ceil(Math.random() * 1000000);
-    const todo = target.value;
     const todoObj = {
       id: uniqId,
-      item: todo.trim(),
+      item: todoText.trim(),
       done: false
     };
 
@@ -32,12 +31,12 @@ const removeTodoItem = (state, todoId, target) => {
   });
 
    // TODO: REF EKLENİCEK
-   const nextEl = target.nextElementSibling;
-   if (nextEl) {
-     nextEl.focus();
-   } else {
-     document.querySelector(".m-todo__input").focus();
-   }
+  const nextEl = target.nextElementSibling;
+  if (nextEl) {
+    nextEl.focus();
+  } else {
+    document.querySelector(".m-todo__input").focus();
+  }
 
   return filteredTodos;
 }
