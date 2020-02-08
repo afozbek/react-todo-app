@@ -2,21 +2,19 @@
 const todos = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      console.log("ADD TODO");
-      return addTodo(state, action.event)
-    case 'TOGGLE_TODO':
-      console.log("TOGGLE TODO")
-      return state
+      return addTodoItem(state, action.event);
     case 'REMOVE_TODO':
-      console.log("REMOVE TODO")
-      return removeTodo(state, action.todoId, action.target);
-
+      return removeTodoItem(state, action.todoId, action.target);
+    case 'TOGGLE_TODO':
+      return toggleTodoStatus(state, action.todoId, action.target);
+    case "CLEAR_COMPLETED_TODOS":
+      return clearCompletedTodos(state);
     default:
       return state
   }
 }
 
-const addTodo = (state, { target }) => {
+const addTodoItem = (state, { target }) => {
     const uniqId = Math.ceil(Math.random() * 1000000);
     const todo = target.value;
     const todoObj = {
@@ -28,7 +26,7 @@ const addTodo = (state, { target }) => {
     return state.concat(todoObj);
 }
 
-const removeTodo = (state, todoId, target) => {
+const removeTodoItem = (state, todoId, target) => {
   const filteredTodos = state.filter(todo => {
     return todo.id !== todoId;
   });
@@ -44,6 +42,23 @@ const removeTodo = (state, todoId, target) => {
   return filteredTodos;
 }
 
+const toggleTodoStatus = (state, todoId, target) => {
+  console.log("TOGGLE TODO")
+  const newTodoList = state.map(todo => {
+    if (todo.id === todoId) {
+      todo.done = !todo.done;
+    }
+    return todo;
+  });
+
+  target.classList.toggle("-done");
+
+  return newTodoList;
+}
+
+const clearCompletedTodos = (state) => {
+  return state.filter(todo => todo.done === false);
+}
 
 
 export default todos;
