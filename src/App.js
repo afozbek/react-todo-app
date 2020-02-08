@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import TodoList from './components/Todo/TodoList';
-import TodoInput from "./components/Todo/TodoInput";
-import Footer from './components/Footer';
+import Main from "./components/Main";
 
 class App extends React.Component {
   componentDidMount() {
@@ -13,20 +11,11 @@ class App extends React.Component {
   }
 
   render() {
-    const main = (
-      <main className="o-app__main">
-        <TodoList />
-      </main>
-    );
-
     return (
       <div className="o-app">
         <h1 className="o-app__header">Today's TO DO's</h1>
         <div className="m-todo">
-          <TodoInput />
-
-          {main}
-          {this.props.todoList.length > 0 ? <Footer /> : null}
+          <Main />
 
           <p className="o-app__infoMsg">To remove an item press <code><strong>del</strong></code> in your keyboard when you focus the item</p>
           <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code><strong>delete</strong></code> button</p>
@@ -41,11 +30,9 @@ App.propTypes = {
   activeFilter: PropTypes.string.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    todoList: state.todos,
-    activeFilter: state.activeFilter
-  }
-}
+const mapStateToProps = state => ({
+  todoList: state.todos,
+  activeFilter: state.activeFilter
+});
 
 export default connect(mapStateToProps)(App);
