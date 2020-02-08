@@ -1,13 +1,17 @@
+import {
+  ADD_TODO, REMOVE_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODOS,
+} from "../actions/types"
+
 // TODO REDUCER
 const todos = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case ADD_TODO:
       return addTodoItem(state, action.todoText);
-    case 'REMOVE_TODO':
+    case REMOVE_TODO:
       return removeTodoItem(state, action.todoId, action.target);
-    case 'TOGGLE_TODO':
+    case TOGGLE_TODO:
       return toggleTodoStatus(state, action.todoId, action.target);
-    case "CLEAR_COMPLETED_TODOS":
+    case CLEAR_COMPLETED_TODOS:
       return clearCompletedTodos(state);
     default:
       return state
