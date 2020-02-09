@@ -7,7 +7,8 @@ import {
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
-  selectAllTodoItems
+  selectAllTodoItems,
+  changeTextOfTodoItem
 } from "./todoActions";
 
 export {
@@ -16,5 +17,6 @@ export {
   toggleTodoItem,
   clearCompletedTodoItems,
   selectAllTodoItems,
-  changeActiveFilter
+  changeActiveFilter,
+  changeTextOfTodoItem
 }
