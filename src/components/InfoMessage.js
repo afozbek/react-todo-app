@@ -13,7 +13,9 @@ const InfoMessage = () => {
         >
         Made with
         <span role="img" aria-labelledby="authorParagraph"> ❤️</span> by
-        <a className="o-app__author" 
+        <a className="o-app__author"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="To Visit Creator's Github Page, please press enter button"
           href="https://github.com/afozbek">
           {" "}
