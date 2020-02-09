@@ -1,18 +1,23 @@
 import {
-  ADD_TODO, REMOVE_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODOS,
+  ADD_TODO_ITEM, REMOVE_TODO_ITEM,
+  TOGGLE_TODO_ITEM,
+  CLEAR_COMPLETED_TODO_ITEMS,
+  SELECT_ALL_TODO_ITEMS
 } from "../actions/types"
 
 // TODO REDUCER
 const todos = (state = [], action) => {
   switch (action.type) {
-    case ADD_TODO:
+    case ADD_TODO_ITEM:
       return addTodoItem(state, action.todoText);
-    case REMOVE_TODO:
+    case REMOVE_TODO_ITEM:
       return removeTodoItem(state, action.todoId);
-    case TOGGLE_TODO:
-      return toggleTodoStatus(state, action.todoId);
-    case CLEAR_COMPLETED_TODOS:
-      return clearCompletedTodos(state);
+    case TOGGLE_TODO_ITEM:
+      return toggleTodoItem(state, action.todoId);
+    case CLEAR_COMPLETED_TODO_ITEMS:
+      return clearCompletedTodoItems(state);
+    case SELECT_ALL_TODO_ITEMS:
+      return selectAllTodoItems(state);
     default:
       return state
   }
@@ -37,10 +42,13 @@ const removeTodoItem = (state, todoId) => {
   return filteredTodos;
 }
 
-const toggleTodoStatus = (state, todoId) => {
+const toggleTodoItem = (state, todoId) => {
   const newTodoList = state.map(todo => {
     if (todo.id === todoId) {
-      todo.done = !todo.done;
+      return {
+        ...todo,
+        done: !todo.done
+      }
     }
     return todo;
   });
@@ -48,8 +56,17 @@ const toggleTodoStatus = (state, todoId) => {
   return newTodoList;
 }
 
-const clearCompletedTodos = (state) => {
+const clearCompletedTodoItems = (state) => {
   return state.filter(todo => todo.done === false);
+}
+
+const selectAllTodoItems = (state) => {
+  return state.map(todo => {
+    return {
+      ...todo,
+      done: true
+    };
+  });
 }
 
 

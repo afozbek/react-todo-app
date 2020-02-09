@@ -17,6 +17,7 @@
   text-align: center;
 
   &__main {
+    position: relative;
     margin-bottom: 10px;
   }
 
@@ -27,6 +28,41 @@
     margin-bottom: 40px;
   }
 
+  &__todoToggleBtn {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: #e6e6e6;
+    transform: rotate(90deg);
+    padding: 0;
+    height: 50px;
+    width: 50px;
+    transition: color .5s;
+
+    &.-visible {
+      display: inline-block;
+
+      &:hover {
+        color: #5f5f5f;
+      }
+    }
+  }
+
+  &__itemLeft {
+    text-align: start;
+    width: 30%;
+  }
+
+  &__filterBtnContainer {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+  }
+
   &__filterBtn {
     padding: 3px 5px;
     cursor: pointer;
@@ -34,7 +70,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
 
-    &:hover, &:focus {
+    &:hover, &:focus, &[data-selected=true] {
       color: #fff;
       border-color:rgba(74,74,189,.91);
       background: rgba(74,74,189,.91);
@@ -69,6 +105,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
     padding: 15px;
+    padding-left: 45px;
     font-size: 17px;
     cursor: pointer;
 
@@ -119,11 +156,7 @@
         outline: 5px auto -webkit-focus-ring-color; // Chrome, Safari and Opera
     }
 
-    &:hover + .m-todo__label {
-      border-color: rgba(74,74,189,.91);
-    }
-
-    &:checked + .m-todo__label {
+    &.-done + .m-todo__label{
       &::after {
         content: attr(data-content);
         position: absolute;
@@ -135,7 +168,7 @@
       }
     }
 
-    &:checked ~ .m-todo__desc {
+    &.-done ~ .m-todo__desc {
       color: #888;
       text-decoration: line-through;
     }
@@ -153,6 +186,10 @@
     vertical-align: middle;
     border-radius: 3px;
     cursor: pointer;
+
+    &:hover {
+      border-color: rgba(74,74,189,.91);
+    }
   }
 
   &__desc {

@@ -12,7 +12,7 @@ const InfoMessage = () => {
         aria-label="Made With Love by Abdullah Furkan Ozbek"
         >
         Made with
-        <span role="img" aria-labelledby="authorParagraph">❤️</span> by
+        <span role="img" aria-labelledby="authorParagraph"> ❤️</span> by
         <a className="o-app__author" 
           aria-label="To Visit Creator's Github Page, please press enter button"
           href="https://github.com/afozbek">

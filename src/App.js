@@ -16,7 +16,7 @@ class App extends React.Component {
       <div className="o-app">
         <h1 className="o-app__header">Today's TODO's</h1>
         <div className="m-todo">
-          <Main />
+          <Main todoListLength={this.props.todoList.length}/>
 
           <InfoMessage />
         </div>

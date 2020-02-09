@@ -2,19 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-import Todo from './Todo/Todo'
+import Todo from './TodoItem/TodoItem'
 
-const TodoList = ({ todos, activeFilter }) => {
+const TodoList = ({ todoList, activeFilter }) => {
   const filterTodoList = (filterType) => {
     switch (filterType) {
       case "ALL":
-        return todos;
+        return todoList;
       case "ACTIVE":
-        return todos.filter(todo => todo.done === false);
+        return todoList.filter(todo => todo.done === false);
       case "COMPLETED":
-        return todos.filter(todo => todo.done === true);
+        return todoList.filter(todo => todo.done === true);
       default:
-        return todos;
+        return todoList;
     }
   };
 
@@ -27,13 +27,13 @@ const TodoList = ({ todos, activeFilter }) => {
   ) : null;
 }
 TodoList.propTypes = {
-  todos: PropTypes.array.isRequired,
+  todoList: PropTypes.array.isRequired,
   activeFilter: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
   activeFilter: state.activeFilter,
-  todos: state.todos
+  todoList: state.todos
 });
 
 export default connect(mapStateToProps)(TodoList)
