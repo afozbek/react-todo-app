@@ -44,10 +44,33 @@ const Footer = ({ todoListLength, clearTodos, changeFilter }) => {
     <footer className="o-app__footer">
       <p className="o-app__itemLeft" tabIndex="0">{todoListLength} Items Left</p>
       <div className="o-app__filterBtnContainer" ref={filterButtonContainer}>
-        <button className="o-app__filterBtn" data-filter="ALL" onClick={setActiveFilter}>All</button>
-        <button className="o-app__filterBtn" data-filter="ACTIVE" onClick={setActiveFilter}>Active</button>
-        <button className="o-app__filterBtn" data-filter="COMPLETED" onClick={setActiveFilter}>Completed</button>
-        <button className="o-app__filterBtn" data-clear data-filter="ALL" onClick={setSelectedDataAfterClear}>Clear Completed</button>
+        <button
+          aria-label="Filter By: ALL TODOS"
+          className="o-app__filterBtn"
+          data-filter="ALL"
+          onClick={setActiveFilter}>
+          All
+        </button>
+        <button
+          aria-label="Filter By: ACTIVE TODOS"
+          className="o-app__filterBtn"
+          data-filter="ACTIVE"
+          onClick={setActiveFilter}>
+          Active
+        </button>
+        <button
+          aria-label="Filter By: COMPLETED TODOS"
+          className="o-app__filterBtn"
+          data-filter="COMPLETED"
+          onClick={setActiveFilter}>
+          Completed
+        </button>
+        <button
+          className="o-app__filterBtn"
+          data-clear data-filter="ALL"
+          onClick={setSelectedDataAfterClear}>
+          Clear Completed
+        </button>
       </div>
     </footer>
   ) : null;
