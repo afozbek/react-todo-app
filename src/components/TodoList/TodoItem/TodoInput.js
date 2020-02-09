@@ -7,7 +7,7 @@ import { keyCodes } from "../../../util";
 
 const TodoInput = ({ addTodoItem }) => {
   const inputKeyDownHandler = ({target, keyCode}) => {
-    if (Object.values(keyCodes).indexOf(keyCode) === -1 || target.value.length < 2) return;
+    if (keyCode !== keyCodes.enter || target.value.length < 2) return;
 
     addTodoItem(target.value);
 
@@ -22,7 +22,7 @@ const TodoInput = ({ addTodoItem }) => {
       name="todo"
       id="todoInput"
       type="text"
-      placeholder="What do you want to do today 🍓"
+      placeholder="What do you want to do today... "
     />
   )
 }
