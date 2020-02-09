@@ -96,21 +96,19 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
         type="checkbox"
         name="todoCheckbox"
         id={`todoCheckbox-${todo.id}`}
-        aria-labelledby="todoLabel"
+        aria-label={`Have you done these? ${todo.text}`}
         onClick={() => toggleTodoItem(todo.id)}
       />
 
       <label
         className="m-todo__label"
         id="todoLabel"
-        aria-label={`Do you want to select this todo ${todo.done ? 'undone': 'done'}?`}
         htmlFor={`todoCheckbox-${todo.id}`}
         data-content="✔︎"
       ></label>
 
       <p
         className="m-todo__desc"
-        tabIndex="0"
         onDoubleClick={doubleClickHandler}
         onBlur={() => onFocusOutHandler(todo.id)}
         ref={editableParagraph}
@@ -120,6 +118,7 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
 
       <button
         className="m-todo__removeBtn"
+        aria-label={`Do you want to delete this todo? ${todo.text}`}
         onClick={() => removeTodoHandler(todo.id)}
       >
         Delete Todo

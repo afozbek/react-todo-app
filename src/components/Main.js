@@ -12,6 +12,7 @@ const Main = ({ todoListLength, selectAllTodoItems }) => {
   return (
     <main className="o-app__main">
       <button
+        aria-label="To select all todos done, please press enter or space."
         className={`o-app__todoToggleBtn ${todoListLength ? "-visible": ""}`}
         onClick={selectAllTodoItems}
         >

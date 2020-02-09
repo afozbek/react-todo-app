@@ -3,8 +3,8 @@ import React from 'react'
 const InfoMessage = () => {
   return (
     <React.Fragment>
-      <p className="o-app__infoMsg" tabIndex="0">This page is completely accessible. If you want to use your keyboard, go ahead and try it!</p>
-      <p className="o-app__infoMsg" tabIndex="0">To remove an item press <code><strong>del</strong></code> in your keyboard when you focus to TODO item</p>
+      <p className="o-app__infoMsg" tabIndex="0">This page is <strong>completely accessible</strong>. If you want to use your keyboard, go ahead and try it!</p>
+      <p className="o-app__infoMsg" tabIndex="0">To remove an item press <code><strong>delete</strong></code> key in your keyboard when you focus to TODO item</p>
       <p className="o-app__infoMsg" tabIndex="0">You can also delete todo by hovering the item and then press the <code><strong>delete</strong></code> button</p>
       <p className="o-app__infoMsg -author"
         id="authorParagraph"
