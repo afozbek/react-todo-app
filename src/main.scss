@@ -145,7 +145,7 @@
         outline: 5px auto -webkit-focus-ring-color; // Chrome, Safari and Opera
     }
 
-    &:checked + .m-todo__label {
+    &.-done + .m-todo__label{
       &::after {
         content: attr(data-content);
         position: absolute;
@@ -157,7 +157,7 @@
       }
     }
 
-    &:checked ~ .m-todo__desc {
+    &.-done ~ .m-todo__desc {
       color: #888;
       text-decoration: line-through;
     }
