@@ -16,7 +16,7 @@ const Footer = ({todoListLength, clearTodos, changeFilter}) => {
       <button className="o-app__filterBtn" data-filter="ALL" onClick={setActiveFilter}>All</button>
       <button className="o-app__filterBtn" data-filter="ACTIVE" onClick={setActiveFilter}>Active</button>
       <button className="o-app__filterBtn" data-filter="COMPLETED" onClick={setActiveFilter}>Completed</button>
-      <button className="o-app__filterBtn" onClick={clearTodos}>Clear Completed</button>
+      <button className="o-app__filterBtn" data-filter="ALL" onClick={clearTodos}>Clear Completed</button>
     </footer>
   ) : null;
 }
@@ -32,9 +32,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearTodos: () => {
+  clearTodos: ({ target }) => {
+    const filter = target.dataset.filter;
     dispatch(clearCompletedTodos());
-    dispatch(changeActiveFilter("ALL"));
+    dispatch(changeActiveFilter(filter));
 
     // TODO: REF EKLENEBİLİR
     document.querySelector(".m-todo__input").focus();
