@@ -12,16 +12,20 @@ const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
     if (Object.values(keyCodes).indexOf(keyCode) === -1) return;
 
     if (keyCode === keyCodes.delete) {
-      removeTodoItem(todoId);
-
-      // TODO: REF EKLENEBİLİR
-      const defaultEl = document.querySelector(".m-todo__input");
-      return focusNextElement(defaultEl);
+      return removeTodoHandler(todoId);
     }
 
     return focusElement(keyCode);
   }
 
+  const removeTodoHandler = (todoId) => {
+    removeTodoItem(todoId);
+
+    // TODO: REF EKLENEBİLİR
+    const defaultEl = document.querySelector(".m-todo__input");
+    return focusNextElement(defaultEl);
+  }
+ 
   const focusElement = (keyCode) => {
     const { left, up, down, right } = keyCodes;
 
@@ -87,12 +91,11 @@ const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
         aria-label={`Do you want to select this todo ${todo.done ? 'undone': 'done'}?`}
         htmlFor={`todoCheckbox-${todo.id}`}
         data-content="✔︎"
-
       ></label>
       <p className="m-todo__desc" tabIndex="0">{todo.item}</p>
       <button
         className="m-todo__removeBtn"
-        onClick={() => removeTodoItem(todo.id)}
+        onClick={() => removeTodoHandler(todo.id)}
       >
         Delete Todo
       </button>
