@@ -1,40 +1,41 @@
-import React from "react";
+import React, {useRef} from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
 import { keyCodes } from "../../util"
-import { removeTodoItem, toggleTodoStatus } from '../../store/actions/index';
+import { removeTodoItem, toggleTodoStatus } from '../../store/actions';
 
 const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
+  const todoItem = useRef();
 
-  const todoKeyDownHandler = (todoId, { keyCode, target }) => {
+  const todoKeyDownHandler = (todoId, keyCode) => {
     if (Object.values(keyCodes).indexOf(keyCode) === -1) return;
 
-    if (keyCode === keyCodes.space) {
-      return toggleTodoStatus(todoId, target);
-    } else if (keyCode === keyCodes.delete) {
-      return removeTodoItem(todoId, target);
+    if (keyCode === keyCodes.delete) {
+      removeTodoItem(todoId);
+
+      // TODO: REF EKLENEBİLİR
+      const defaultEl = document.querySelector(".m-todo__input");
+      return focusNextElement(defaultEl);
     }
 
-    return focusElement(keyCode, target);
+    return focusElement(keyCode);
   }
 
-  const focusElement = (keyCode, target) => {
+  const focusElement = (keyCode) => {
     const { left, up, down, right } = keyCodes;
 
-    // TODO: REF EKLENICEK
-    const todoItems = document.querySelector(".m-todo__list").children;
-    const firstTodoItem = todoItems[0];
-    const lastTodoItem = todoItems[todoItems.length - 1];
+    const firstTodoItem = todoItem.current.parentNode.firstChild;
+    const lastTodoItem = todoItem.current.parentNode.lastChild;
 
     switch (keyCode) {
       case left:
       case up:
-        focusPreviousElement(target, lastTodoItem);
+        focusPreviousElement(lastTodoItem);
         break;
       case down:
       case right:
-        focusNextElement(target, firstTodoItem);
+        focusNextElement(firstTodoItem);
         break;
 
       default:
@@ -42,8 +43,8 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
     }
   };
 
-  const focusPreviousElement = (target, defaultEl) => {
-    const prevEl = target.previousElementSibling;
+  const focusPreviousElement = (defaultEl) => {
+    const prevEl = todoItem.current.previousElementSibling;
 
     let nextFocusEl = prevEl;
     if (!prevEl) {
@@ -53,8 +54,8 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
     nextFocusEl.focus();
   };
 
-  const focusNextElement = (target, defaultEl) => {
-    const nextEl = target.nextElementSibling;
+  const focusNextElement = (defaultEl) => {
+    const nextEl = todoItem.current.nextElementSibling;
 
     let nextFocusEl = nextEl;
     if (!nextEl) {
@@ -67,15 +68,32 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
   return (
     <li
       className={`m-todo__item ${todo.done ? "-done" : ""}`}
-      aria-label={"You want to do: " + todo.item}
       key={todo.id}
-      tabIndex="0"
-      onKeyDown={e => todoKeyDownHandler(todo.id, e)}
+      tabIndex="-1"
+      ref={todoItem}
+      onKeyDown={e => todoKeyDownHandler(todo.id, e.keyCode)}
     >
-      <p className="m-todo__desc">{todo.item}</p>
+      <input
+        className="m-todo__checkbox"
+        type="checkbox"
+        name="todoCheckbox"
+        id="todoCheckbox"
+        aria-labelledby="todoLabel"
+        defaultChecked={todo.done}
+        onClick={() => toggleTodoStatus(todo.id)}
+      />
+      <label
+        className="m-todo__label"
+        id="todoLabel"
+        aria-label={`Do you want to select this todo ${todo.done ? 'undone': 'done'}?`}
+        htmlFor="todoCheckbox"
+        data-content="✔︎"
+
+      ></label>
+      <p className="m-todo__desc" tabIndex="0">{todo.item}</p>
       <button
         className="m-todo__removeBtn"
-        onClick={e => removeTodoItem(todo.id, e.target)}
+        onClick={() => removeTodoItem(todo.id)}
       >
         Delete Todo
       </button>

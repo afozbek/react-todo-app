@@ -82,13 +82,49 @@
         opacity: 1;
       }
     }
+  }
 
-    &.-done {
-      .m-todo__desc {
-        color: #888;
-        text-decoration: line-through;
+  &__checkbox {
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    &:focus + .m-todo__label {
+        $focus-ring-color: #212121;
+        outline: 2px dotted $focus-ring-color; // FF, IE and Edge
+        outline: 5px auto -webkit-focus-ring-color; // Chrome, Safari and Opera
+    }
+
+    &:checked + .m-todo__label {
+      &::after {
+        content: attr(data-content);
+        position: absolute;
+        top: 2px;
+        left: 4px;
+        color: rgba(74,74,189,.91);
+        font-family: monospace;
+        font-size: 14px;
       }
     }
+
+    &:checked ~ .m-todo__desc {
+      color: #888;
+      text-decoration: line-through;
+    }
+  }
+
+  &__label {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: .3125rem;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-color: #ccc;
+    vertical-align: middle;
+    border-radius: 3px;
+    cursor: pointer;
   }
 
   &__desc {
