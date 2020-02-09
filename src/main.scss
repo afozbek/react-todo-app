@@ -42,6 +42,20 @@
     }
   }
 
+  &__downloadDataBtn {
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+    font-size: 12px;
+    background: rgba(74, 74, 189, 0.91);
+    border-color: rgba(74, 74, 189, 0.91);
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: opacity 0.8s;
+  }
+
   &__todoToggleBtn {
     display: none;
     position: absolute;
@@ -79,7 +93,7 @@
   }
 
   &__filterBtn {
-    padding: 3px 5px;
+    padding: 5px;
     cursor: pointer;
 
     border: 1px solid #ccc;
