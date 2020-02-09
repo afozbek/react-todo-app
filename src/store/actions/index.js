@@ -3,6 +3,8 @@ import {
 } from "./activeFilterActions";
 
 import {
+  initTodoListState,
+  clearTodoState,
   addTodoItem,
   removeTodoItem,
   toggleTodoItem,
@@ -12,6 +14,8 @@ import {
 } from "./todoActions";
 
 export {
+  initTodoListState,
+  clearTodoState,
   addTodoItem,
   removeTodoItem,
   toggleTodoItem,
