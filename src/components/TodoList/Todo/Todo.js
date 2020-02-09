@@ -46,9 +46,9 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
   const focusPreviousElement = (defaultEl) => {
     const prevEl = todoItem.current.previousElementSibling;
 
-    let nextFocusEl = prevEl;
-    if (!prevEl) {
-      nextFocusEl = defaultEl;
+    let nextFocusEl = prevEl ? prevEl.firstChild : null;
+    if (!nextFocusEl) {
+      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.firstChild;
     }
 
     nextFocusEl.focus();
@@ -57,9 +57,9 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
   const focusNextElement = (defaultEl) => {
     const nextEl = todoItem.current.nextElementSibling;
 
-    let nextFocusEl = nextEl;
-    if (!nextEl) {
-      nextFocusEl = defaultEl;
+    let nextFocusEl = nextEl ? nextEl.firstChild : null;
+    if (!nextFocusEl) {
+      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.firstChild;
     }
 
     nextFocusEl.focus();
@@ -69,7 +69,6 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
     <li
       className={`m-todo__item ${todo.done ? "-done" : ""}`}
       key={todo.id}
-      tabIndex="-1"
       ref={todoItem}
       onKeyDown={e => todoKeyDownHandler(todo.id, e.keyCode)}
     >
@@ -77,7 +76,7 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
         className="m-todo__checkbox"
         type="checkbox"
         name="todoCheckbox"
-        id="todoCheckbox"
+        id={`todoCheckbox-${todo.id}`}
         aria-labelledby="todoLabel"
         defaultChecked={todo.done}
         onClick={() => toggleTodoStatus(todo.id)}
@@ -86,7 +85,7 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
         className="m-todo__label"
         id="todoLabel"
         aria-label={`Do you want to select this todo ${todo.done ? 'undone': 'done'}?`}
-        htmlFor="todoCheckbox"
+        htmlFor={`todoCheckbox-${todo.id}`}
         data-content="✔︎"
 
       ></label>
