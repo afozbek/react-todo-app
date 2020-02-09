@@ -1,5 +1,5 @@
 import {
-  ADD_TODO, REMOVE_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODOS,
+  ADD_TODO, REMOVE_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODOS, SELECT_ALL_TODO_ITEMS
 } from "../actions/types"
 
 // TODO REDUCER
@@ -13,6 +13,8 @@ const todos = (state = [], action) => {
       return toggleTodoStatus(state, action.todoId);
     case CLEAR_COMPLETED_TODOS:
       return clearCompletedTodos(state);
+    case SELECT_ALL_TODO_ITEMS:
+      return selectAllTodoItems(state);
     default:
       return state
   }
@@ -50,6 +52,13 @@ const toggleTodoStatus = (state, todoId) => {
 
 const clearCompletedTodos = (state) => {
   return state.filter(todo => todo.done === false);
+}
+
+const selectAllTodoItems = (state) => {
+  return state.map(todo => {
+    todo.done = true;
+    return todo;
+  });
 }
 
 

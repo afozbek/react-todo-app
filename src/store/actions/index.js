@@ -1,5 +1,5 @@
 import {
-  ADD_TODO, REMOVE_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODOS,
+  ADD_TODO, REMOVE_TODO, TOGGLE_TODO, CLEAR_COMPLETED_TODOS, SELECT_ALL_TODO_ITEMS,
   CHANGE_ACTIVE_FILTER
 } from "./types"
 
@@ -20,6 +20,10 @@ export const toggleTodoStatus = todoId => ({
 
 export const clearCompletedTodos = () => ({
   type: CLEAR_COMPLETED_TODOS
+});
+
+export const selectAllTodoItems = () => ({
+  type: SELECT_ALL_TODO_ITEMS
 });
 
 export const changeActiveFilter = filter => ({
