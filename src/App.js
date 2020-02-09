@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Main from "./components/Main";
+import InfoMessage from "./components/InfoMessage";
 
 class App extends React.Component {
   componentDidMount() {
@@ -13,12 +14,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="o-app">
-        <h1 className="o-app__header">Today's TO DO's</h1>
+        <h1 className="o-app__header">Today's TODO's</h1>
         <div className="m-todo">
           <Main />
 
-          <p className="o-app__infoMsg">To remove an item press <code><strong>del</strong></code> in your keyboard when you focus the item</p>
-          <p className="o-app__infoMsg">You can also delete todo by hovering the item and then press the <code><strong>delete</strong></code> button</p>
+          <InfoMessage />
         </div>
       </div>
     );
