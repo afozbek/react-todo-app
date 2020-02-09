@@ -45,27 +45,28 @@ const Footer = ({ todoListLength, clearTodos, changeFilter }) => {
       <p className="o-app__itemLeft" tabIndex="0">{todoListLength} Items Left</p>
       <div className="o-app__filterBtnContainer" ref={filterButtonContainer}>
         <button
-          aria-label="Filter By: ALL TODOS"
+          aria-label="Filter By: All todos"
           className="o-app__filterBtn"
           data-filter="ALL"
           onClick={setActiveFilter}>
           All
         </button>
         <button
-          aria-label="Filter By: ACTIVE TODOS"
+          aria-label="Filter By: Active todos"
           className="o-app__filterBtn"
           data-filter="ACTIVE"
           onClick={setActiveFilter}>
           Active
         </button>
         <button
-          aria-label="Filter By: COMPLETED TODOS"
+          aria-label="Filter By: Completed todos"
           className="o-app__filterBtn"
           data-filter="COMPLETED"
           onClick={setActiveFilter}>
           Completed
         </button>
         <button
+          aria-label="Clear Completed todos"
           className="o-app__filterBtn"
           data-clear data-filter="ALL"
           onClick={setSelectedDataAfterClear}>

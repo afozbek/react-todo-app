@@ -49,6 +49,7 @@
     left: 0;
     font-size: 20px;
     background: none;
+    cursor: pointer;
     border: none;
     color: #e6e6e6;
     transform: rotate(90deg);
@@ -151,7 +152,8 @@
     margin-bottom: 5px;
     text-align: justify;
     position: relative;
-
+    font-size: 17px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 
     word-break: break-all;
 
@@ -164,10 +166,6 @@
         visibility: visible;
         opacity: 1;
       }
-    }
-
-    @media screen and (max-width: 500px){
-      
     }
   }
 
