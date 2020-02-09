@@ -55,13 +55,14 @@ const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
   };
 
   const focusNextElement = (defaultEl) => {
+    const prevEl = todoItem.current.previousElementSibling;
     const nextEl = todoItem.current.nextElementSibling;
 
-    let nextFocusEl = nextEl ? nextEl.firstChild : null;
+    let nextFocusEl = nextEl ? nextEl.firstChild :
+                      prevEl ? prevEl.firstChild : null;
     if (!nextFocusEl) {
-      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.firstChild;
+      nextFocusEl = defaultEl;
     }
-
     nextFocusEl.focus();
   };
 
