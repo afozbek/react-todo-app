@@ -52,6 +52,17 @@
     }
   }
 
+  &__itemLeft {
+    text-align: start;
+    width: 30%;
+  }
+
+  &__filterBtnContainer {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+  }
+
   &__filterBtn {
     padding: 3px 5px;
     cursor: pointer;
@@ -59,7 +70,7 @@
     border: 1px solid #ccc;
     border-radius: 3px;
 
-    &:hover, &:focus {
+    &:hover, &:focus, &[data-selected=true] {
       color: #fff;
       border-color:rgba(74,74,189,.91);
       background: rgba(74,74,189,.91);
