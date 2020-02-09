@@ -1,6 +1,6 @@
 import React from 'react'
-import TodoList from './Todo/TodoList';
-import TodoInput from './Todo/TodoInput';
+import TodoList from './TodoList/TodoList';
+import TodoInput from './TodoList/Todo/TodoInput';
 import Footer from './Footer';
 
 const Main = () => {

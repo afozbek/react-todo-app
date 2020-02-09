@@ -2,8 +2,8 @@ import React, {useRef} from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
-import { keyCodes } from "../../util"
-import { removeTodoItem, toggleTodoStatus } from '../../store/actions';
+import { keyCodes } from "../../../util"
+import { removeTodoItem, toggleTodoStatus } from '../../../store/actions';
 
 const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
   const todoItem = useRef();

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
 
-import { addTodoItem } from "../../store/actions";
-import { keyCodes } from "../../util";
+import { addTodoItem } from "../../../store/actions";
+import { keyCodes } from "../../../util";
 
 const TodoInput = ({ addTodoItem }) => {
   const inputKeyDownHandler = ({target, keyCode}) => {
