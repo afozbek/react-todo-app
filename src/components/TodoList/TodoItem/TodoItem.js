@@ -24,13 +24,13 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
   }
 
   const removeTodoHandler = (todoId) => {
-    removeTodoItem(todoId);
-
     // TODO: REF EKLENEBİLİR
     const defaultEl = document.querySelector(".m-todo__input");
-    return focusNextElement(defaultEl);
+    focusNextElement(defaultEl);
+
+    return removeTodoItem(todoId);
   }
- 
+
   const focusElement = (keyCode) => {
     const { left, up, down, right } = keyCodes;
 
@@ -68,7 +68,7 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
 
     let nextFocusEl = nextEl ? nextEl.firstChild : null
     if (!nextFocusEl) {
-      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.firstChild;
+      nextFocusEl = defaultEl;
     }
     nextFocusEl.focus();
   };
