@@ -96,7 +96,7 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
         type="checkbox"
         name="todoCheckbox"
         id={`todoCheckbox-${todo.id}`}
-        aria-label={`Have you done these? ${todo.text}`}
+        aria-label={`${todo.text}`}
         onClick={() => toggleTodoItem(todo.id)}
       />
 
