@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { clearCompletedTodos, changeActiveFilter } from "../store/actions";
 
-const Footer = ({todoListLength, clearCompletedTodos, changeActiveFilter}) => {
+const Footer = ({todoListLength, clearTodos, changeFilter}) => {
   const setActiveFilter = (e) => {
     const filter = e.target.dataset.filter;
-    changeActiveFilter(filter);
+    changeFilter(filter);
   }
 
   return todoListLength > 0 ? (
@@ -16,22 +16,31 @@ const Footer = ({todoListLength, clearCompletedTodos, changeActiveFilter}) => {
       <button className="o-app__filterBtn" data-filter="ALL" onClick={setActiveFilter}>All</button>
       <button className="o-app__filterBtn" data-filter="ACTIVE" onClick={setActiveFilter}>Active</button>
       <button className="o-app__filterBtn" data-filter="COMPLETED" onClick={setActiveFilter}>Completed</button>
-      <button className="o-app__filterBtn" onClick={clearCompletedTodos}>Clear Completed</button>
+      <button className="o-app__filterBtn" data-filter="ALL" onClick={clearTodos}>Clear Completed</button>
     </footer>
   ) : null;
 }
 
 Footer.propTypes = {
-  todoListLength: PropTypes.number.isRequired
+  todoListLength: PropTypes.number.isRequired,
+  clearTodos: PropTypes.func.isRequired,
+  changeFilter: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  todoListLength : state.todos.length
+  todoListLength : state.todos.length,
 });
 
-const mapDispatchToProps = {
-  clearCompletedTodos,
-  changeActiveFilter
-}
+const mapDispatchToProps = dispatch => ({
+  clearTodos: ({ target }) => {
+    const filter = target.dataset.filter;
+    dispatch(clearCompletedTodos());
+    dispatch(changeActiveFilter(filter));
+
+    // TODO: REF EKLENEBİLİR
+    document.querySelector(".m-todo__input").focus();
+  },
+  changeFilter: (filter) => dispatch(changeActiveFilter(filter))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer)
