@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-import Todo from './Todo/Todo'
+import Todo from './TodoItem/TodoItem'
 
 const TodoList = ({ todoList, activeFilter }) => {
   const filterTodoList = (filterType) => {

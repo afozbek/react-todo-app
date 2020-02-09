@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 
-import { clearCompletedTodos, changeActiveFilter } from "../store/actions";
+import { clearCompletedTodoItems, changeActiveFilter } from "../store/actions";
 
-const Footer = ({todoListLength, clearTodos, changeFilter}) => {
+const Footer = ({ todoListLength, clearTodos, changeFilter }) => {
   const setActiveFilter = (e) => {
     const filter = e.target.dataset.filter;
     changeFilter(filter);
@@ -34,7 +34,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   clearTodos: ({ target }) => {
     const filter = target.dataset.filter;
-    dispatch(clearCompletedTodos());
+    dispatch(clearCompletedTodoItems());
     dispatch(changeActiveFilter(filter));
 
     // TODO: REF EKLENEBİLİR

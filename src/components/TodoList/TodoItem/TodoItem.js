@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
 import { keyCodes } from "../../../util"
-import { removeTodoItem, toggleTodoStatus } from '../../../store/actions';
+import { removeTodoItem, toggleTodoItem } from '../../../store/actions';
 
-const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
+const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
   const todoItem = useRef();
 
   const todoKeyDownHandler = (todoId, keyCode) => {
@@ -73,13 +73,12 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
       onKeyDown={e => todoKeyDownHandler(todo.id, e.keyCode)}
     >
       <input
-        className="m-todo__checkbox"
+        className={`m-todo__checkbox ${todo.done ? "-done": ""}`}
         type="checkbox"
         name="todoCheckbox"
         id={`todoCheckbox-${todo.id}`}
         aria-labelledby="todoLabel"
-        defaultChecked={todo.done}
-        onClick={() => toggleTodoStatus(todo.id)}
+        onClick={() => toggleTodoItem(todo.id)}
       />
       <label
         className="m-todo__label"
@@ -100,15 +99,15 @@ const Todo = ({todo , removeTodoItem, toggleTodoStatus}) => {
   );
 };
 
-const mapDispatchToProps = {
-  removeTodoItem,
-  toggleTodoStatus
-}
-
-Todo.propTypes = {
+TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   removeTodoItem: PropTypes.func.isRequired,
-  toggleTodoStatus: PropTypes.func.isRequired
+  toggleTodoItem: PropTypes.func.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(Todo);
+const mapDispatchToProps = {
+  removeTodoItem,
+  toggleTodoItem
+}
+
+export default connect(null, mapDispatchToProps)(TodoItem);
