@@ -14,6 +14,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.initTodoListState();
+    // DOWNLOAD LINK FOR USER DATA
     const downloadLink = `data:text/json;charset=utf-8,${encodeURIComponent(getLocalStorageTodoState(true))}`
 
     this.setState({ downloadLink });
