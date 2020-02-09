@@ -8,9 +8,9 @@ const todos = (state = [], action) => {
     case ADD_TODO:
       return addTodoItem(state, action.todoText);
     case REMOVE_TODO:
-      return removeTodoItem(state, action.todoId, action.target);
+      return removeTodoItem(state, action.todoId);
     case TOGGLE_TODO:
-      return toggleTodoStatus(state, action.todoId, action.target);
+      return toggleTodoStatus(state, action.todoId);
     case CLEAR_COMPLETED_TODOS:
       return clearCompletedTodos(state);
     default:
@@ -29,31 +29,21 @@ const addTodoItem = (state, todoText) => {
     return state.concat(todoObj);
 }
 
-const removeTodoItem = (state, todoId, target) => {
+const removeTodoItem = (state, todoId) => {
   const filteredTodos = state.filter(todo => {
     return todo.id !== todoId;
   });
 
-   // TODO: REF EKLENİCEK
-  const nextEl = target.nextElementSibling;
-  if (nextEl) {
-    nextEl.focus();
-  } else {
-    document.querySelector(".m-todo__input").focus();
-  }
-
   return filteredTodos;
 }
 
-const toggleTodoStatus = (state, todoId, target) => {
+const toggleTodoStatus = (state, todoId) => {
   const newTodoList = state.map(todo => {
     if (todo.id === todoId) {
       todo.done = !todo.done;
     }
     return todo;
   });
-
-  target.classList.toggle("-done");
 
   return newTodoList;
 }

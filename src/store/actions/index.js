@@ -3,21 +3,19 @@ import {
   CHANGE_ACTIVE_FILTER
 } from "./types"
 
-export const addTodoItem = (todoText) => ({
+export const addTodoItem = todoText => ({
   type: ADD_TODO,
   todoText
 });
 
-export const removeTodoItem = (todoId, target) => ({
+export const removeTodoItem = todoId => ({
   type: REMOVE_TODO,
-  todoId,
-  target
+  todoId
 });
 
-export const toggleTodoStatus = (todoId, target) => ({
+export const toggleTodoStatus = todoId => ({
   type: TOGGLE_TODO,
-  todoId,
-  target
+  todoId
 });
 
 export const clearCompletedTodos = () => ({
