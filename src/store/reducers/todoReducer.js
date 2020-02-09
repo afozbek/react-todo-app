@@ -2,7 +2,8 @@ import {
   ADD_TODO_ITEM, REMOVE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
   CLEAR_COMPLETED_TODO_ITEMS,
-  SELECT_ALL_TODO_ITEMS
+  SELECT_ALL_TODO_ITEMS,
+  CHANGE_TEXT_OF_TODO_ITEM
 } from "../actions/types"
 
 // TODO REDUCER
@@ -18,6 +19,8 @@ const todos = (state = [], action) => {
       return clearCompletedTodoItems(state);
     case SELECT_ALL_TODO_ITEMS:
       return selectAllTodoItems(state);
+    case CHANGE_TEXT_OF_TODO_ITEM:
+      return changeTextOfTodoItem(state, action.todoId, action.todoText);
     default:
       return state
   }
@@ -27,7 +30,7 @@ const addTodoItem = (state, todoText) => {
     const uniqId = Math.ceil(Math.random() * 1000000);
     const todoObj = {
       id: uniqId,
-      item: todoText.trim(),
+      text: todoText.trim(),
       done: false
     };
 
@@ -56,17 +59,29 @@ const toggleTodoItem = (state, todoId) => {
   return newTodoList;
 }
 
-const clearCompletedTodoItems = (state) => {
+const clearCompletedTodoItems = state => {
   return state.filter(todo => todo.done === false);
 }
 
-const selectAllTodoItems = (state) => {
+const selectAllTodoItems = state => {
   return state.map(todo => {
     return {
       ...todo,
       done: true
     };
   });
+}
+
+const changeTextOfTodoItem = (state, todoId, todoText) => {
+  return state.map(todo => {
+    if (todo.id === todoId){
+      return {
+        ...todo,
+        text: todoText
+      }
+    }
+    return todo;
+  })
 }
 
 

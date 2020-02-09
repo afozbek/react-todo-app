@@ -12,10 +12,11 @@
 }
 
 .o-app {
-  width: 550px;
+  max-width: 550px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
-
+  
   &__main {
     position: relative;
     margin-bottom: 10px;
@@ -27,6 +28,18 @@
     align-items: center;
     margin-bottom: 40px;
     margin-top: 10px;
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+    }
+  }
+
+  &__itemLeft {
+    @media screen and (max-width: 500px) {
+      margin-bottom: 5px;
+    }
   }
 
   &__todoToggleBtn {
@@ -100,6 +113,10 @@
   width: 80%;
   margin: 20px auto;
 
+  @media screen and (max-width: 500px) {
+    width: 90%;
+  }
+
   &__input {
     width: 100%;
     height: 50px;
@@ -122,6 +139,10 @@
     padding: 10px;
     border-radius: 3px;
     margin-bottom: 10px;
+
+    @media screen and (max-width: 500px) {
+      padding: 10px 0;
+    }
   }
 
   &__item {
@@ -143,6 +164,10 @@
         visibility: visible;
         opacity: 1;
       }
+    }
+
+    @media screen and (max-width: 500px){
+      
     }
   }
 
@@ -195,6 +220,10 @@
 
   &__desc {
     width: 70%;
+
+    @media screen and (max-width: 500px){
+      width: 50%;
+    }
   }
 
 

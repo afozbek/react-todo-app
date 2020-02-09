@@ -1,27 +1,36 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
 import { keyCodes } from "../../../util"
-import { removeTodoItem, toggleTodoItem } from '../../../store/actions';
+import {
+  removeTodoItem,
+  toggleTodoItem,
+  changeTextOfTodoItem
+} from '../../../store/actions';
 
-const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
+const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem }) => {
   const todoItem = useRef();
+  const editableParagraph = useRef();
 
   const todoKeyDownHandler = (todoId, keyCode) => {
     if (Object.values(keyCodes).indexOf(keyCode) === -1) return;
 
     if (keyCode === keyCodes.delete) {
-      removeTodoItem(todoId);
-
-      // TODO: REF EKLENEBİLİR
-      const defaultEl = document.querySelector(".m-todo__input");
-      return focusNextElement(defaultEl);
+      return removeTodoHandler(todoId);
     }
 
     return focusElement(keyCode);
   }
 
+  const removeTodoHandler = (todoId) => {
+    removeTodoItem(todoId);
+
+    // TODO: REF EKLENEBİLİR
+    const defaultEl = document.querySelector(".m-todo__input");
+    return focusNextElement(defaultEl);
+  }
+ 
   const focusElement = (keyCode) => {
     const { left, up, down, right } = keyCodes;
 
@@ -48,23 +57,32 @@ const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
 
     let nextFocusEl = prevEl ? prevEl.firstChild : null;
     if (!nextFocusEl) {
-      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.firstChild;
+      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.lastChild;
     }
 
     nextFocusEl.focus();
   };
 
   const focusNextElement = (defaultEl) => {
-    const prevEl = todoItem.current.previousElementSibling;
     const nextEl = todoItem.current.nextElementSibling;
 
-    let nextFocusEl = nextEl ? nextEl.firstChild :
-                      prevEl ? prevEl.firstChild : null;
+    let nextFocusEl = nextEl ? nextEl.firstChild : null
     if (!nextFocusEl) {
-      nextFocusEl = defaultEl;
+      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.firstChild;
     }
     nextFocusEl.focus();
   };
+
+  const doubleClickHandler = () => {
+    editableParagraph.current.contentEditable = true;
+  }
+
+  const onFocusOutHandler = (todoId) => {
+    const todoText = editableParagraph.current.textContent;
+    changeTextOfTodoItem(todoId, todoText);
+
+    editableParagraph.current.contentEditable = false;
+  }
 
   return (
     <li
@@ -81,18 +99,28 @@ const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
         aria-labelledby="todoLabel"
         onClick={() => toggleTodoItem(todo.id)}
       />
+
       <label
         className="m-todo__label"
         id="todoLabel"
         aria-label={`Do you want to select this todo ${todo.done ? 'undone': 'done'}?`}
         htmlFor={`todoCheckbox-${todo.id}`}
         data-content="✔︎"
-
       ></label>
-      <p className="m-todo__desc" tabIndex="0">{todo.item}</p>
+
+      <p
+        className="m-todo__desc"
+        tabIndex="0"
+        onDoubleClick={doubleClickHandler}
+        onBlur={() => onFocusOutHandler(todo.id)}
+        ref={editableParagraph}
+        >
+        {todo.text}
+      </p>
+
       <button
         className="m-todo__removeBtn"
-        onClick={() => removeTodoItem(todo.id)}
+        onClick={() => removeTodoHandler(todo.id)}
       >
         Delete Todo
       </button>
@@ -103,12 +131,14 @@ const TodoItem = ({todo , removeTodoItem, toggleTodoItem}) => {
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   removeTodoItem: PropTypes.func.isRequired,
-  toggleTodoItem: PropTypes.func.isRequired
+  toggleTodoItem: PropTypes.func.isRequired,
+  changeTextOfTodoItem: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
   removeTodoItem,
-  toggleTodoItem
+  toggleTodoItem,
+  changeTextOfTodoItem,
 }
 
 export default connect(null, mapDispatchToProps)(TodoItem);
