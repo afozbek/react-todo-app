@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 import { keyCodes } from "../../../util"
 import {
   removeTodoItem,
-  toggleTodoItem,
   changeTextOfTodoItem
 } from '../../../store/actions';
 import CustomCheckbox from "../../CustomCheckbox/CustomCheckbox";
 import TodoDeleteButton from "./TodoDeleteButton";
 
-const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem }) => {
+const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
   const todoItem = useRef();
   const editableParagraph = useRef();
 
@@ -105,13 +104,11 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   removeTodoItem: PropTypes.func.isRequired,
-  toggleTodoItem: PropTypes.func.isRequired,
   changeTextOfTodoItem: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
   removeTodoItem,
-  toggleTodoItem,
   changeTextOfTodoItem,
 };
 
