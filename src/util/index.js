@@ -15,3 +15,7 @@ export const getLocalStorageTodoState = (stringify=false) => {
 
   return newState;
 }
+
+export const setToLocalStorage = newState => {
+  localStorage.setItem(LOCALSTORAGE_TODO_STATE, JSON.stringify(newState));
+}
