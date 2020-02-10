@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import Main from "./components/Main";
+import Main from "./containers/Main";
 import InfoMessage from "./components/InfoMessage";
 import { initTodoListState } from "./store/actions"
 import { getLocalStorageTodoState } from "./util"
