@@ -9,16 +9,13 @@ import { clearCompletedTodoItems, changeActiveFilter } from "../../store/actions
 const FilterButtonContainer = ({ clearTodos, changeFilter }) => {
   const filterButtonContainer = useRef();
 
-  const setActiveFilter = (e) => {
+  const setActiveFilter = e => {
     setSelectedData(e.target);
     const filter = e.target.dataset.filter;
     changeFilter(filter);
-
-    // TODO: REF EKLENEBİLİR
-    document.querySelector(".m-todo__input").focus();
   }
 
-  const setSelectedData = (target) => {
+  const setSelectedData = target => {
     const buttonContainer = Array.from(filterButtonContainer.current.children)
     buttonContainer
       .forEach(btn => {
@@ -61,7 +58,7 @@ FilterButtonContainer.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-  clearTodos: (target) => {
+  clearTodos: target => {
     const filter = target.dataset.filter;
     dispatch(clearCompletedTodoItems());
     dispatch(changeActiveFilter(filter));
@@ -69,7 +66,7 @@ const mapDispatchToProps = dispatch => ({
     // TODO: REF EKLENEBİLİR
     document.querySelector(".m-todo__input").focus();
   },
-  changeFilter: (filter) => dispatch(changeActiveFilter(filter))
+  changeFilter: filter => dispatch(changeActiveFilter(filter))
 })
 
 export default connect(null, mapDispatchToProps)(FilterButtonContainer)
