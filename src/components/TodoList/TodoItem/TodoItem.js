@@ -25,7 +25,6 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
     } else if (key === space && e.target === todoLabel.current) {
       focusEditInput();
     } else if (key === enter && e.target === todoEditInput.current) {
-      console.log("HEllo world");
       focusTodoLabel(todo.id)
     }
 
