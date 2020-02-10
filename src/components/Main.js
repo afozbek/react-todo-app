@@ -6,15 +6,15 @@ import TodoList from './TodoList/TodoList';
 import TodoInput from './TodoList/TodoItem/TodoInput';
 import Footer from './Footer';
 
-import { selectAllTodoItems } from "../store/actions"
+import { toggleAllTodoItems } from "../store/actions"
 
-const Main = ({ todoListLength, selectAllTodoItems }) => {
+const Main = ({ todoListLength, toggleAllTodoItems, toggled }) => {
   return (
     <main className="o-app__main">
       <button
         aria-label="To select all todos done, please press enter or space."
-        className={`o-app__todoToggleBtn ${todoListLength ? "-visible": ""}`}
-        onClick={selectAllTodoItems}
+        className={`o-app__todoToggleBtn ${todoListLength ? "-visible": ""} ${toggled ? "-toggled": ""}`}
+        onClick={toggleAllTodoItems}
         >
           ❯
       </button>
@@ -27,11 +27,16 @@ const Main = ({ todoListLength, selectAllTodoItems }) => {
 
 Main.propTypes = {
   todoListLength: PropTypes.number.isRequired,
-  selectAllTodoItems: PropTypes.func.isRequired
+  toggleAllTodoItems: PropTypes.func.isRequired,
+  toggled: PropTypes.bool
 }
+
+const mapStateToProps = state => ({
+  toggled: state.todos.allTodosSelected
+});
 
 const mapDispatchToProps = {
-  selectAllTodoItems
+  toggleAllTodoItems
 }
 
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
