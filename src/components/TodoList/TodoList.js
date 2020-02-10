@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -8,13 +8,12 @@ const TodoList = ({ todoList, activeFilter }) => {
   const filterTodoList = (filterType) => {
     switch (filterType) {
       case "ALL":
+      default:
         return todoList;
       case "ACTIVE":
         return todoList.filter(todo => todo.done === false);
       case "COMPLETED":
         return todoList.filter(todo => todo.done === true);
-      default:
-        return todoList;
     }
   };
 
