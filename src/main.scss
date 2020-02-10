@@ -16,7 +16,7 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  
+
   &__main {
     position: relative;
     margin-bottom: 10px;
@@ -43,8 +43,8 @@
   }
 
   &__downloadDataBtn {
+    display: none;
     cursor: pointer;
-    width: 100px;
     height: 25px;
     font-size: 12px;
     background: rgba(74, 74, 189, 0.91);
@@ -74,10 +74,10 @@
 
     &.-visible {
       display: inline-block;
+    }
 
-      &:hover {
-        color: #5f5f5f;
-      }
+    &.-toggled {
+      color: #5f5f5f;
     }
   }
 

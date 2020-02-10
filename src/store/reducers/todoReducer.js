@@ -4,15 +4,20 @@ import {
   ADD_TODO_ITEM, REMOVE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
   CLEAR_COMPLETED_TODO_ITEMS,
-  SELECT_ALL_TODO_ITEMS,
+  TOGGLE_ALL_TODO_ITEMS,
   CHANGE_TEXT_OF_TODO_ITEM,
   LOCALSTORAGE_TODO_STATE
 } from "../actions/types"
 
-import { getLocalStorageTodoState } from "../../util";
+import { getLocalStorageTodoState, setToLocalStorage } from "../../util";
 
+
+const initialState = {
+  todoList: [],
+  allTodosSelected: false
+};
 // TODO REDUCER
-const todos = (state = [], action) => {
+const todos = (state = initialState, action) => {
   switch (action.type) {
     case INIT_TODO_STATE:
       return initTodoState(state);
@@ -26,32 +31,34 @@ const todos = (state = [], action) => {
       return toggleTodoItem(state, action.todoId);
     case CLEAR_COMPLETED_TODO_ITEMS:
       return clearCompletedTodoItems(state);
-    case SELECT_ALL_TODO_ITEMS:
-      return selectAllTodoItems(state);
+    case TOGGLE_ALL_TODO_ITEMS:
+      return toggleAllTodoItems(state);
     case CHANGE_TEXT_OF_TODO_ITEM:
       return changeTextOfTodoItem(state, action.todoId, action.todoText);
     default:
-      return state
+      return state;
   }
 }
 
 const initTodoState = state => {
-  const newState = getLocalStorageTodoState()
+  const newState = getLocalStorageTodoState();
 
-  const concatted = state.concat(newState);
+  if(newState.length === 0) {
+    return initialState;
+  }
 
-  return concatted;
+  return {
+    ...state,
+    todoList: [...newState.todoList],
+    allTodosSelected: newState.allTodosSelected
+  };
 }
 
 const clearTodoState = state => {
   localStorage.removeItem(LOCALSTORAGE_TODO_STATE);
-  state = [];
+  state = initialState;
 
   return state;
-}
-
-const setToLocalStorage = newState => {
-  localStorage.setItem(LOCALSTORAGE_TODO_STATE, JSON.stringify(newState));
 }
 
 const addTodoItem = (state, todoText) => {
@@ -62,24 +69,33 @@ const addTodoItem = (state, todoText) => {
       done: false
     };
 
-    const newState = state.concat(todoObj);
+    const newState = {
+      ...state,
+      todoList: state.todoList.concat(todoObj)
+    }
+
     setToLocalStorage(newState);
 
     return newState;
 }
 
 const removeTodoItem = (state, todoId) => {
-  const filteredTodos = state.filter(todo => {
+  const filteredTodoItems = state.todoList.filter(todo => {
     return todo.id !== todoId;
   });
 
-  setToLocalStorage(filteredTodos);
+  const newState = {
+    ...state,
+    todoList: filteredTodoItems
+  }
 
-  return filteredTodos;
+  setToLocalStorage(newState);
+
+  return newState;
 }
 
 const toggleTodoItem = (state, todoId) => {
-  const newTodoList = state.map(todo => {
+  const newTodoList = state.todoList.map(todo => {
     if (todo.id === todoId) {
       return {
         ...todo,
@@ -89,33 +105,50 @@ const toggleTodoItem = (state, todoId) => {
     return todo;
   });
 
-  setToLocalStorage(newTodoList);
+  const newState = {
+    ...state,
+    todoList: newTodoList
+  }
 
-  return newTodoList;
+  setToLocalStorage(newState);
+
+  return newState;
 }
 
 const clearCompletedTodoItems = state => {
-  const remainingTodoItems = state.filter(todo => todo.done === false);
+  const remainingTodoItems = state.todoList.filter(todo => todo.done === false);
 
-  setToLocalStorage(remainingTodoItems);
-  return remainingTodoItems;
+  const newState = {
+    ...state,
+    todoList: remainingTodoItems
+  };
+
+  setToLocalStorage(newState);
+  return newState;
 }
 
-const selectAllTodoItems = state => {
-  const selectedAllTodoItems = state.map(todo => {
+const toggleAllTodoItems = state => {
+  const allTodosSelected = state.allTodosSelected;
+  const selectedAllTodoItems = state.todoList.map(todo => {
     return {
       ...todo,
-      done: true
+      done: !allTodosSelected
     };
   });
 
-  setToLocalStorage(selectedAllTodoItems);
+  const newState = {
+    ...state,
+    todoList: selectedAllTodoItems,
+    allTodosSelected: !allTodosSelected
+  };
 
-  return selectedAllTodoItems;
+  setToLocalStorage(newState);
+
+  return newState;
 }
 
 const changeTextOfTodoItem = (state, todoId, todoText) => {
-  const changedTodoList = state.map(todo => {
+  const changedTodoList = state.todoList.map(todo => {
     if (todo.id === todoId){
       return {
         ...todo,
@@ -125,9 +158,14 @@ const changeTextOfTodoItem = (state, todoId, todoText) => {
     return todo;
   });
 
-  setToLocalStorage(changedTodoList);
+  const newState = {
+    ...state,
+    todoList: changedTodoList
+  };
 
-  return changedTodoList;
+  setToLocalStorage(newState);
+
+  return newState;
 }
 
 

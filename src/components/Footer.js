@@ -84,7 +84,7 @@ Footer.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  todoListLength : state.todos.length,
+  todoListLength : state.todos.todoList.length,
 });
 
 const mapDispatchToProps = dispatch => ({

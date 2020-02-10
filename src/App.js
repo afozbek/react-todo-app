@@ -14,8 +14,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.initTodoListState();
-    // DOWNLOAD LINK FOR USER DATA
-    const downloadLink = `data:text/json;charset=utf-8,${encodeURIComponent(getLocalStorageTodoState(true))}`
+    const downloadLink = `data:application/json;charset=utf-8,${encodeURIComponent(getLocalStorageTodoState(true))}`
 
     this.setState({ downloadLink });
 
@@ -55,7 +54,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  todoList: state.todos,
+  todoList: state.todos.todoList,
   activeFilter: state.activeFilter
 });
 

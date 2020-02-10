@@ -9,7 +9,7 @@ import {
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
-  selectAllTodoItems,
+  toggleAllTodoItems,
   changeTextOfTodoItem
 } from "./todoActions";
 
@@ -20,7 +20,7 @@ export {
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
-  selectAllTodoItems,
+  toggleAllTodoItems,
   changeActiveFilter,
   changeTextOfTodoItem
 }

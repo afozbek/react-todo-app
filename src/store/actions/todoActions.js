@@ -3,7 +3,7 @@ import {
   REMOVE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
   CLEAR_COMPLETED_TODO_ITEMS,
-  SELECT_ALL_TODO_ITEMS,
+  TOGGLE_ALL_TODO_ITEMS,
   CHANGE_TEXT_OF_TODO_ITEM,
   INIT_TODO_STATE,
   CLEAR_TODO_STATE
@@ -38,8 +38,8 @@ const clearCompletedTodoItems = () => ({
   type: CLEAR_COMPLETED_TODO_ITEMS
 });
 
-const selectAllTodoItems = () => ({
-  type: SELECT_ALL_TODO_ITEMS
+const toggleAllTodoItems = () => ({
+  type: TOGGLE_ALL_TODO_ITEMS
 });
 
 const changeTextOfTodoItem = (todoId, todoText) => ({
@@ -55,6 +55,6 @@ export {
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
-  selectAllTodoItems,
+  toggleAllTodoItems,
   changeTextOfTodoItem
 }

@@ -32,8 +32,8 @@ TodoList.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  activeFilter: state.activeFilter,
-  todoList: state.todos
+  todoList: state.todos.todoList,
+  activeFilter: state.activeFilter
 });
 
 export default connect(mapStateToProps)(TodoList)

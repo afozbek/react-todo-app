@@ -8,6 +8,8 @@ import {
   toggleTodoItem,
   changeTextOfTodoItem
 } from '../../../store/actions';
+import CustomCheckbox from "../../CustomCheckbox/CustomCheckbox";
+import TodoDeleteButton from "./TodoDeleteButton";
 
 const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem }) => {
   const todoItem = useRef();
@@ -23,7 +25,7 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
     return focusElement(keyCode);
   }
 
-  const removeTodoHandler = (todoId) => {
+  const removeTodoHandler = todoId => {
     // TODO: REF EKLENEBİLİR
     const defaultEl = document.querySelector(".m-todo__input");
     focusNextElement(defaultEl);
@@ -31,11 +33,11 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
     return removeTodoItem(todoId);
   }
 
-  const focusElement = (keyCode) => {
+  const focusElement = keyCode => {
     const { left, up, down, right } = keyCodes;
 
-    const firstTodoItem = todoItem.current.parentNode.firstChild;
-    const lastTodoItem = todoItem.current.parentNode.lastChild;
+    const firstTodoItem = todoItem.current.parentNode.firstChild.firstChild;
+    const lastTodoItem = todoItem.current.parentNode.lastChild.firstChild;
 
     switch (keyCode) {
       case left:
@@ -52,13 +54,10 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
     }
   };
 
-  const focusPreviousElement = (defaultEl) => {
+  const focusPreviousElement = defaultEl => {
     const prevEl = todoItem.current.previousElementSibling;
 
-    let nextFocusEl = prevEl ? prevEl.firstChild : null;
-    if (!nextFocusEl) {
-      nextFocusEl = defaultEl ? defaultEl.firstChild : todoItem.current.lastChild;
-    }
+    let nextFocusEl = prevEl ? prevEl.firstChild : defaultEl;
 
     nextFocusEl.focus();
   };
@@ -66,10 +65,8 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
   const focusNextElement = (defaultEl) => {
     const nextEl = todoItem.current.nextElementSibling;
 
-    let nextFocusEl = nextEl ? nextEl.firstChild : null
-    if (!nextFocusEl) {
-      nextFocusEl = defaultEl;
-    }
+    let nextFocusEl = nextEl ? nextEl.firstChild : defaultEl
+
     nextFocusEl.focus();
   };
 
@@ -91,38 +88,16 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
       ref={todoItem}
       onKeyDown={e => todoKeyDownHandler(todo.id, e.keyCode)}
     >
-      <input
-        className={`m-todo__checkbox ${todo.done ? "-done": ""}`}
-        type="checkbox"
-        name="todoCheckbox"
-        id={`todoCheckbox-${todo.id}`}
-        aria-label={`${todo.text}`}
-        onClick={() => toggleTodoItem(todo.id)}
-      />
+      <CustomCheckbox todoId={todo.id} todoText={todo.text} todoDone={todo.done} />
 
-      <label
-        className="m-todo__label"
-        id="todoLabel"
-        htmlFor={`todoCheckbox-${todo.id}`}
-        data-content="✔︎"
-      ></label>
-
-      <p
-        className="m-todo__desc"
+      <p className="m-todo__desc" ref={editableParagraph}
         onDoubleClick={doubleClickHandler}
         onBlur={() => onFocusOutHandler(todo.id)}
-        ref={editableParagraph}
-        >
+      >
         {todo.text}
       </p>
 
-      <button
-        className="m-todo__removeBtn"
-        aria-label={`Do you want to delete this todo? ${todo.text}`}
-        onClick={() => removeTodoHandler(todo.id)}
-      >
-        Delete Todo
-      </button>
+      <TodoDeleteButton todoId={todo.id} todoText={todo.text} removeTodoHandler={removeTodoHandler} />
     </li>
   );
 };
