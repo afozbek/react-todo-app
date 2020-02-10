@@ -7,17 +7,15 @@ import TodoInput from '../components/TodoList/TodoItem/TodoInput';
 import Footer from './Footer';
 
 import { toggleAllTodoItems } from "../store/actions"
+import ToggleButton from '../components/ToggleButton';
 
 const Main = ({ todoListLength, toggleAllTodoItems, toggled }) => {
+
+  const toggleButtonsProps = { todoListLength, toggled, toggleAllTodoItems };
+
   return (
     <main className="o-app__main">
-      <button
-        aria-label="To select all todos done, please press enter or space."
-        className={`o-app__todoToggleBtn ${todoListLength ? "-visible": ""} ${toggled ? "-toggled": ""}`}
-        onClick={toggleAllTodoItems}
-        >
-          ❯
-      </button>
+      <ToggleButton {...toggleButtonsProps} />
       <TodoInput />
       <TodoList />
       <Footer />
