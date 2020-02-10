@@ -2,6 +2,8 @@
 
 [Live Project](https://todo.furkanozbek.com/)
 
+![a11y app usage](assets/todoapp-a11y.gif)
+
 ![App Usage](assets/todoapp.gif)
 
 ## Installing
