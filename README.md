@@ -2,6 +2,8 @@
 
 [Live Project](https://todo.furkanozbek.com/)
 
+![App Usage](assets/todoapp320px.gif)
+
 ## Installing
 
 > run `yarn install` or `yarn start`
