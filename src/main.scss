@@ -231,8 +231,24 @@
     }
   }
 
+  &__editInput {
+    display: none;
+    width: 70%;
+    height: 30px;
+    font-size: 16px;
+    margin-right: auto;
+
+    &.-editing {
+      display: block;
+    }
+  }
+
   &__desc {
     width: 70%;
+
+    &.-editing {
+      display: none;
+    }
 
     @media screen and (max-width: 500px){
       width: 50%;
