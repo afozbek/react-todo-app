@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const InfoMessage = () => {
   return (
@@ -23,7 +23,7 @@ const InfoMessage = () => {
         </a>
       </p>
     </React.Fragment>
-  )
+  );
 }
 
-export default InfoMessage
+export default InfoMessage;

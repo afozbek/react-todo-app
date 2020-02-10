@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Todo from './TodoItem/TodoItem'
+import Todo from './TodoItem/TodoItem';
 
 const TodoList = ({ todoList, activeFilter }) => {
   const filterTodoList = (filterType) => {
@@ -26,14 +26,15 @@ const TodoList = ({ todoList, activeFilter }) => {
     </ul>
   ) : null;
 }
+
 TodoList.propTypes = {
   todoList: PropTypes.array.isRequired,
   activeFilter: PropTypes.string.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
   todoList: state.todos.todoList,
   activeFilter: state.activeFilter
 });
 
-export default connect(mapStateToProps)(TodoList)
+export default connect(mapStateToProps)(TodoList);

@@ -7,17 +7,17 @@ import {
   CHANGE_TEXT_OF_TODO_ITEM,
   INIT_TODO_STATE,
   CLEAR_TODO_STATE
-} from "./types"
+} from "./types";
 
 // TODO OPERATIONS
 
 const initTodoListState = () => ({
   type: INIT_TODO_STATE
-})
+});
 
 const clearTodoState = () => ({
   type: CLEAR_TODO_STATE
-})
+});
 
 const addTodoItem = todoText => ({
   type: ADD_TODO_ITEM,
@@ -57,4 +57,4 @@ export {
   clearCompletedTodoItems,
   toggleAllTodoItems,
   changeTextOfTodoItem
-}
+};

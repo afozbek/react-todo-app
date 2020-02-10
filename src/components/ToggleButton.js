@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const ToggleButton = ({ todoListLength, toggled, toggleAllTodoItems }) => {
   return (
@@ -10,13 +10,13 @@ const ToggleButton = ({ todoListLength, toggled, toggleAllTodoItems }) => {
       >
         ❯
     </button>
-  )
+  );
 }
 
 ToggleButton.propTypes = {
   todoListLength: PropTypes.number.isRequired,
   toggleAllTodoItems: PropTypes.func.isRequired,
   toggled: PropTypes.bool
-}
+};
 
-export default ToggleButton
+export default ToggleButton;

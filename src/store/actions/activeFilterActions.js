@@ -1,6 +1,6 @@
 import {
   CHANGE_ACTIVE_FILTER
-} from "./types"
+} from "./types";
 
 // ACTIVE FILTER
 const changeActiveFilter = filter => ({
@@ -10,4 +10,4 @@ const changeActiveFilter = filter => ({
 
 export {
   changeActiveFilter
-}
+};

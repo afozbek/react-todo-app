@@ -8,6 +8,6 @@ const activeFilterReducer = (state = "ALL", action) => {
     default:
       return state
   }
-}
+};
 
 export default activeFilterReducer;

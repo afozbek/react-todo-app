@@ -11,7 +11,7 @@ const Footer = ({ todoListLength }) => {
       <FilterButtonContainer />
     </footer>
   ) : null;
-}
+};
 
 const mapStatToProps = state => ({
   todoListLength : state.todos.todoList.length,
@@ -19,6 +19,6 @@ const mapStatToProps = state => ({
 
 Footer.propTypes = {
   todoListLength: PropTypes.number.isRequired,
-}
+};
 
 export default connect(mapStatToProps)(Footer);

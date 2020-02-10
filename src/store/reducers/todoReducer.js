@@ -7,7 +7,7 @@ import {
   TOGGLE_ALL_TODO_ITEMS,
   CHANGE_TEXT_OF_TODO_ITEM,
   LOCALSTORAGE_TODO_STATE
-} from "../actions/types"
+} from "../actions/types";
 
 import { getLocalStorageTodoState, setToLocalStorage } from "../../util";
 
@@ -16,6 +16,7 @@ const initialState = {
   todoList: [],
   allTodosSelected: false
 };
+
 // TODO REDUCER
 const todos = (state = initialState, action) => {
   switch (action.type) {
@@ -167,6 +168,5 @@ const changeTextOfTodoItem = (state, todoId, todoText) => {
 
   return newState;
 }
-
 
 export default todos;
