@@ -1,6 +1,6 @@
-> [Live Project](https://todo.furkanozbek.com/)
-
 # Todo App
+
+[Live Project](https://todo.furkanozbek.com/)
 
 ## Installing
 
@@ -14,8 +14,6 @@ You can easily deploy the project over [Netlify](https://www.netlify.com/) or `g
 
 - [React](https://tr.reactjs.org/) - UI library for js
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
-- [Font Awesome](https://fontawesome.com)
-  - [Font Awesome React Component](https://github.com/FortAwesome/react-fontawesome#learn-about-our-new-svg-implementation)
 - [Redux](https://redux.js.org/) - State Management
 - **Redux Persistent** - Save the application state locally or remotely
 - Accessibility Features, ARIA - User Experience improved
