@@ -13,6 +13,9 @@ const FilterButtonContainer = ({ clearTodos, changeFilter }) => {
     setSelectedData(e.target);
     const filter = e.target.dataset.filter;
     changeFilter(filter);
+
+    // TODO: REF EKLENEBİLİR
+    document.querySelector(".m-todo__input").focus();
   }
 
   const setSelectedData = (target) => {
