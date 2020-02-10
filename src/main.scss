@@ -43,8 +43,8 @@
   }
 
   &__downloadDataBtn {
+    display: none;
     cursor: pointer;
-    width: 100px;
     height: 25px;
     font-size: 12px;
     background: rgba(74, 74, 189, 0.91);
