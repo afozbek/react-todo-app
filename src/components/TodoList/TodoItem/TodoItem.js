@@ -12,16 +12,23 @@ import TodoDeleteButton from "./TodoDeleteButton";
 
 const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
   const todoItem = useRef();
-  const editableParagraph = useRef();
+  const todoLabel = useRef();
+  const todoEditInput = useRef();
 
-  const todoKeyDownHandler = (todoId, keyCode) => {
-    if (Object.values(keyCodes).indexOf(keyCode) === -1) return;
+  const todoKeyDownHandler = (todoId, e) => {
+    const key = e.keyCode;
+    const { space, enter } = keyCodes
+    if (Object.values(keyCodes).indexOf(key) === -1) return;
 
-    if (keyCode === keyCodes.delete) {
+    if (key === keyCodes.delete) {
       return removeTodoHandler(todoId);
+    } else if (key === space && e.target === todoLabel.current) {
+      focusEditInput();
+    } else if (key === enter && e.target === todoEditInput.current) {
+      focusTodoLabel(todo.id)
     }
 
-    return focusElement(keyCode);
+    return focusElement(e.keyCode);
   }
 
   const removeTodoHandler = todoId => {
@@ -70,14 +77,28 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
   };
 
   const doubleClickHandler = () => {
-    editableParagraph.current.contentEditable = true;
+    focusEditInput();
   }
 
   const onFocusOutHandler = todoId => {
-    const todoText = editableParagraph.current.textContent;
-    changeTextOfTodoItem(todoId, todoText);
+    focusTodoLabel(todoId);
+  }
 
-    editableParagraph.current.contentEditable = false;
+  const focusEditInput = () => {
+    todoEditInput.current.classList.add("-editing");
+    todoLabel.current.classList.add("-editing");
+
+    todoEditInput.current.value = todo.text;
+    todoEditInput.current.focus();
+  }
+
+  const focusTodoLabel = todoId => {
+    const todoText = todoEditInput.current.value;
+    todoEditInput.current.classList.remove("-editing");
+    todoLabel.current.classList.remove("-editing");
+
+    changeTextOfTodoItem(todoId, todoText);
+    todoLabel.current.focus();
   }
 
   return (
@@ -85,16 +106,19 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
       className={`m-todo__item ${todo.done ? "-done" : ""}`}
       key={todo.id}
       ref={todoItem}
-      onKeyDown={e => todoKeyDownHandler(todo.id, e.keyCode)}
+      onKeyDown={e => todoKeyDownHandler(todo.id, e)}
     >
       <CustomCheckbox todoId={todo.id} todoText={todo.text} todoDone={todo.done} />
 
-      <p className="m-todo__desc" ref={editableParagraph}
+      <input className="m-todo__editInput" type="text" ref={todoEditInput}
+        onBlur={() => onFocusOutHandler(todo.id)} />
+
+      <label className="m-todo__desc" ref={todoLabel}
+        tabIndex="0"
         onDoubleClick={doubleClickHandler}
-        onBlur={() => onFocusOutHandler(todo.id)}
       >
         {todo.text}
-      </p>
+      </label>
 
       <TodoDeleteButton todoId={todo.id} todoText={todo.text} removeTodoHandler={removeTodoHandler} />
     </li>
