@@ -62,7 +62,7 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
     nextFocusEl.focus();
   };
 
-  const focusNextElement = (defaultEl) => {
+  const focusNextElement = defaultEl => {
     const nextEl = todoItem.current.nextElementSibling;
 
     let nextFocusEl = nextEl ? nextEl.firstChild : defaultEl
@@ -74,7 +74,7 @@ const TodoItem = ({ todo , removeTodoItem, toggleTodoItem, changeTextOfTodoItem 
     editableParagraph.current.contentEditable = true;
   }
 
-  const onFocusOutHandler = (todoId) => {
+  const onFocusOutHandler = todoId => {
     const todoText = editableParagraph.current.textContent;
     changeTextOfTodoItem(todoId, todoText);
 
@@ -107,12 +107,12 @@ TodoItem.propTypes = {
   removeTodoItem: PropTypes.func.isRequired,
   toggleTodoItem: PropTypes.func.isRequired,
   changeTextOfTodoItem: PropTypes.func.isRequired
-}
+};
 
 const mapDispatchToProps = {
   removeTodoItem,
   toggleTodoItem,
   changeTextOfTodoItem,
-}
+};
 
 export default connect(null, mapDispatchToProps)(TodoItem);

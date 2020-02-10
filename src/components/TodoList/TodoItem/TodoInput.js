@@ -6,8 +6,9 @@ import { addTodoItem } from "../../../store/actions";
 import { keyCodes } from "../../../util";
 
 const TodoInput = ({ addTodoItem }) => {
-  const inputKeyDownHandler = ({target, keyCode}) => {
-    if (keyCode !== keyCodes.enter || target.value.length < 2) return;
+  const inputKeyDownHandler = ({ target, keyCode }) => {
+    // Simple validation. Delete if you want :)
+    if (keyCode !== keyCodes.enter || target.value.length < 2 || target.value.trim() === "") return;
 
     addTodoItem(target.value);
 
@@ -24,15 +25,15 @@ const TodoInput = ({ addTodoItem }) => {
       type="text"
       placeholder="What do you want to do today... "
     />
-  )
+  );
 }
 
 TodoInput.propTypes = {
   addTodoItem: PropTypes.func.isRequired
-}
+};
 
 const mapDispatchToProps = {
   addTodoItem
-}
+};
 
 export default connect(null, mapDispatchToProps)(TodoInput);

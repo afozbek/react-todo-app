@@ -1,20 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Todo from './TodoItem/TodoItem'
+import Todo from './TodoItem/TodoItem';
 
 const TodoList = ({ todoList, activeFilter }) => {
   const filterTodoList = (filterType) => {
     switch (filterType) {
       case "ALL":
+      default:
         return todoList;
       case "ACTIVE":
         return todoList.filter(todo => todo.done === false);
       case "COMPLETED":
         return todoList.filter(todo => todo.done === true);
-      default:
-        return todoList;
     }
   };
 
@@ -26,14 +25,15 @@ const TodoList = ({ todoList, activeFilter }) => {
     </ul>
   ) : null;
 }
+
 TodoList.propTypes = {
   todoList: PropTypes.array.isRequired,
   activeFilter: PropTypes.string.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
   todoList: state.todos.todoList,
   activeFilter: state.activeFilter
 });
 
-export default connect(mapStateToProps)(TodoList)
+export default connect(mapStateToProps)(TodoList);
