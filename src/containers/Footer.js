@@ -3,10 +3,18 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import FilterButtonContainer from '../components/FilterButton/FilterButtonContainer';
 
-const Footer = ({ todoListLength }) => {
-  return todoListLength > 0 ? (
+const Footer = ({ todoList }) => {
+  const calculateUncompletedTodoItems = todoList => {
+    return todoList.filter(todo => todo.done === false).length;
+  }
+
+  const undoneTodoItemCount = calculateUncompletedTodoItems(todoList);
+  return todoList.length > 0 ? (
     <footer className="o-app__footer">
-      <p className="o-app__itemLeft" tabIndex="0">{todoListLength} Items Left</p>
+      <p className="o-app__itemLeft" tabIndex="0" 
+        aria-label={`You have ${undoneTodoItemCount} uncompleted todo items left`}>
+        {undoneTodoItemCount} Items Left
+      </p>
 
       <FilterButtonContainer />
     </footer>
@@ -14,11 +22,11 @@ const Footer = ({ todoListLength }) => {
 };
 
 const mapStatToProps = state => ({
-  todoListLength : state.todos.todoList.length,
+  todoList : state.todos.todoList,
 });
 
 Footer.propTypes = {
-  todoListLength: PropTypes.number.isRequired,
+  todoList: PropTypes.array.isRequired,
 };
 
 export default connect(mapStatToProps)(Footer);
