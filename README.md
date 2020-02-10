@@ -2,7 +2,7 @@
 
 [Live Project](https://todo.furkanozbek.com/)
 
-![App Usage](assets/todoapp320px.gif)
+![App Usage](assets/todoapp.gif)
 
 ## Installing
 
