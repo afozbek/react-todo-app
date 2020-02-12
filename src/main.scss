@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: 1.5px dotted #212121; // FF, IE and Edge
+  outline: 5px auto -webkit-focus-ring-color; // Chrome, Safari and Opera
+}
+
 #root {
   display: flex;
   justify-content: center;
