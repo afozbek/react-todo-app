@@ -3,6 +3,7 @@ import { LOCALSTORAGE_TODO_STATE } from "../store/actions/types";
 export const keyCodes = {
   enter: 13,
   space: 32,
+  esc: 27,
   left: 37,
   up: 38,
   right: 39,
