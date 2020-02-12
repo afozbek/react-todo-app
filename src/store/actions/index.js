@@ -6,21 +6,21 @@ import {
   initTodoListState,
   clearTodoState,
   addTodoItem,
+  editTodoItem,
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
-  toggleAllTodoItems,
-  changeTextOfTodoItem
+  toggleAllTodoItems
 } from "./todoActions";
 
 export {
   initTodoListState,
   clearTodoState,
   addTodoItem,
+  editTodoItem,
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
   toggleAllTodoItems,
-  changeActiveFilter,
-  changeTextOfTodoItem
+  changeActiveFilter
 };

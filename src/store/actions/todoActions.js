@@ -1,10 +1,10 @@
 import {
   ADD_TODO_ITEM,
+  EDIT_TODO_ITEM,
   REMOVE_TODO_ITEM,
   TOGGLE_TODO_ITEM,
   CLEAR_COMPLETED_TODO_ITEMS,
   TOGGLE_ALL_TODO_ITEMS,
-  CHANGE_TEXT_OF_TODO_ITEM,
   INIT_TODO_STATE,
   CLEAR_TODO_STATE
 } from "./types";
@@ -21,6 +21,12 @@ const clearTodoState = () => ({
 
 const addTodoItem = todoText => ({
   type: ADD_TODO_ITEM,
+  todoText
+});
+
+const editTodoItem = (todoId, todoText) => ({
+  type: EDIT_TODO_ITEM,
+  todoId,
   todoText
 });
 
@@ -42,19 +48,13 @@ const toggleAllTodoItems = () => ({
   type: TOGGLE_ALL_TODO_ITEMS
 });
 
-const changeTextOfTodoItem = (todoId, todoText) => ({
-  type: CHANGE_TEXT_OF_TODO_ITEM,
-  todoId,
-  todoText
-});
-
 export {
   initTodoListState,
   clearTodoState,
   addTodoItem,
+  editTodoItem,
   removeTodoItem,
   toggleTodoItem,
   clearCompletedTodoItems,
-  toggleAllTodoItems,
-  changeTextOfTodoItem
+  toggleAllTodoItems
 };

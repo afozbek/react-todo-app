@@ -5,7 +5,7 @@ import {
   TOGGLE_TODO_ITEM,
   CLEAR_COMPLETED_TODO_ITEMS,
   TOGGLE_ALL_TODO_ITEMS,
-  CHANGE_TEXT_OF_TODO_ITEM,
+  EDIT_TODO_ITEM,
   LOCALSTORAGE_TODO_STATE
 } from "../actions/types";
 
@@ -26,6 +26,8 @@ const todos = (state = initialState, action) => {
       return clearTodoState(state);
     case ADD_TODO_ITEM:
       return addTodoItem(state, action.todoText);
+    case EDIT_TODO_ITEM:
+      return editTodoItem(state, action.todoId, action.todoText);
     case REMOVE_TODO_ITEM:
       return removeTodoItem(state, action.todoId);
     case TOGGLE_TODO_ITEM:
@@ -34,8 +36,6 @@ const todos = (state = initialState, action) => {
       return clearCompletedTodoItems(state);
     case TOGGLE_ALL_TODO_ITEMS:
       return toggleAllTodoItems(state);
-    case CHANGE_TEXT_OF_TODO_ITEM:
-      return changeTextOfTodoItem(state, action.todoId, action.todoText);
     default:
       return state;
   }
@@ -78,6 +78,27 @@ const addTodoItem = (state, todoText) => {
     setToLocalStorage(newState);
 
     return newState;
+}
+
+const editTodoItem = (state, todoId, todoText) => {
+  const changedTodoList = state.todoList.map(todo => {
+    if (todo.id === todoId){
+      return {
+        ...todo,
+        text: todoText
+      }
+    }
+    return todo;
+  });
+
+  const newState = {
+    ...state,
+    todoList: changedTodoList
+  };
+
+  setToLocalStorage(newState);
+
+  return newState;
 }
 
 const removeTodoItem = (state, todoId) => {
@@ -141,27 +162,6 @@ const toggleAllTodoItems = state => {
     ...state,
     todoList: selectedAllTodoItems,
     allTodosSelected: !allTodosSelected
-  };
-
-  setToLocalStorage(newState);
-
-  return newState;
-}
-
-const changeTextOfTodoItem = (state, todoId, todoText) => {
-  const changedTodoList = state.todoList.map(todo => {
-    if (todo.id === todoId){
-      return {
-        ...todo,
-        text: todoText
-      }
-    }
-    return todo;
-  });
-
-  const newState = {
-    ...state,
-    todoList: changedTodoList
   };
 
   setToLocalStorage(newState);
