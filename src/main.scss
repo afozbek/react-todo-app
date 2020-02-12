@@ -255,11 +255,10 @@
     }
   }
 
-
   &__btn {
     visibility: hidden;
     opacity: 0;
-
+    background: #fff;
     cursor: pointer;
     width: 100px;
     height: 25px;
