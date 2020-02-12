@@ -1,16 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
 import { keyCodes } from "../../../util"
 import {
   removeTodoItem,
-  changeTextOfTodoItem
+  editTodoItem
 } from '../../../store/actions';
-import CustomCheckbox from "../../CustomCheckbox/CustomCheckbox";
-import TodoDeleteButton from "./TodoDeleteButton";
 
-const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
+import CustomCheckbox from "../../CustomCheckbox/CustomCheckbox";
+import TodoButton from "./TodoButton";
+import EditTodoModal from '../../Modal/EditTodoModal';
+
+const TodoItem = ({ todo , removeTodoItem, editTodoItem }) => {
+  const [isModelOpening, setModal] = useState(false);
+
   const todoItem = useRef();
   const todoLabel = useRef();
   const todoEditInput = useRef();
@@ -37,6 +41,17 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
     focusNextElement(defaultEl);
 
     return removeTodoItem(todoId);
+  }
+
+  const editTodoHandler = todoId => {
+    // Open Edit Modal
+    setModal(true);
+  }
+
+  const closeModal = () => {
+    // Save the todo item
+    setModal(false);
+    todoLabel.current.focus();
   }
 
   const focusElement = keyCode => {
@@ -97,7 +112,7 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
     todoEditInput.current.classList.remove("-editing");
     todoLabel.current.classList.remove("-editing");
 
-    changeTextOfTodoItem(todoId, todoText);
+    editTodoItem(todoId, todoText);
     todoLabel.current.focus();
   }
 
@@ -120,7 +135,11 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
         {todo.text}
       </label>
 
-      <TodoDeleteButton todoId={todo.id} todoText={todo.text} removeTodoHandler={removeTodoHandler} />
+      <TodoButton todoId={todo.id} todoText={todo.text} clickHandler={editTodoHandler} canEdit>&#9998;</TodoButton>
+      <TodoButton todoId={todo.id} todoText={todo.text} clickHandler={removeTodoHandler}>&times;</TodoButton>
+
+
+      {isModelOpening ? <EditTodoModal closeModal={closeModal} todo={todo}/>:null}
     </li>
   );
 };
@@ -128,12 +147,12 @@ const TodoItem = ({ todo , removeTodoItem, changeTextOfTodoItem }) => {
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   removeTodoItem: PropTypes.func.isRequired,
-  changeTextOfTodoItem: PropTypes.func.isRequired
+  editTodoItem: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
   removeTodoItem,
-  changeTextOfTodoItem,
+  editTodoItem,
 };
 
 export default connect(null, mapDispatchToProps)(TodoItem);
